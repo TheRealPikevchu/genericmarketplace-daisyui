@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProperties> = ({
                             ]}
                         />
                     </div>
-                    <div id="SearchSection" className="px-4">
+                    <div id="SearchSection" className="px-4 max-w-5xl">
                         <SearchBar />
                     </div>
                 </div>
