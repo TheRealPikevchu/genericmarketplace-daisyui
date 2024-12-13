@@ -24,7 +24,7 @@ const BurgerMenu: React.FC<BurgerMenuProperties> = ({ menuItems }) => {
                             className="menu menu-sm dropdown-content bg-orange-600 rounded-box z-[1] mt-3 w-52 p-2 shadow"
                         >
                             {menuItems.map((item) => (
-                                <li id={'menu-item_' + item}>
+                                <li key={'menu-item_' + item}>
                                     <a>{item}</a>
                                 </li>
                             ))}

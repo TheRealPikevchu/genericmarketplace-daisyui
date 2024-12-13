@@ -1,21 +1,7 @@
 import React from 'react'
-
-interface CarouselCardProperties {
-    id: number
-    slideCount: number
-    title: string
-    headline?: string
-    noButton?: boolean
-    buttonText?: string
-    link?: string
-    backgroundColor?: string
-    backgroundImage?: string
-    delay?: number
-}
+import CarouselCardProperties from '../interface/CarouselCardProperties'
 
 const CarouselCard: React.FC<CarouselCardProperties> = ({
-    id,
-    slideCount,
     title,
     headline,
     noButton,
@@ -23,28 +9,36 @@ const CarouselCard: React.FC<CarouselCardProperties> = ({
     link,
     backgroundColor = '#f97316',
     backgroundImage,
-    delay,
 }) => {
     const backgroundColorTag = backgroundImage
         ? `bg-gradient-to-t to-transparent from-[${backgroundColor}]`
         : `bg-[${backgroundColor}]`
 
-    const prevID = id - 1 > 0 ? id - 1 : slideCount
-    const nextID = id + 1 <= slideCount ? id + 1 : 1
-
     return (
-        <div id={'slide' + id} className="carousel-item relative w-full">
-            <img
-                src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp"
-                className="w-full"
-            />
-            <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-                <a href={'#slide' + prevID} className="btn btn-circle">
-                    ❮
-                </a>
-                <a href={'#slide' + nextID} className="btn btn-circle">
-                    ❯
-                </a>
+        <div className="p-0 rounded-3xl items-start content-start">
+            <div
+                className={
+                    'min-h-72 max-h80' + backgroundImage &&
+                    `bg-[${backgroundColor}]`
+                }
+            >
+                {backgroundImage && (
+                    <img src={backgroundImage} alt="highlight-card-image" />
+                )}
+                <div
+                    className={
+                        'flex flex-col p-3 full-width gap-y-2 ' +
+                        backgroundColorTag
+                    }
+                >
+                    <h3 className="text-sky-950 text-start text-base archivo-black">
+                        {title}
+                    </h3>
+                    <p className="text-sky-950 text-start text-base">
+                        {headline}
+                    </p>
+                    {!noButton && <button className="cta">{buttonText}</button>}
+                </div>
             </div>
         </div>
     )
