@@ -1,5 +1,20 @@
 import React from 'react'
 import CarouselCardProperties from '../interface/CarouselCardProperties'
+import styled from 'styled-components'
+
+const getGradientToAlphaDiv = (r: number, g: number, b: number) => styled.div`
+    background: rgba(0, 0, 0, 0);
+    background: linear-gradient(
+        0deg,
+        rgba(${r}, ${g}, ${b}, 1) 0%,
+        rgba(${r}, ${g}, ${b}, 0.9) 80%,
+        rgba(${r}, ${g}, ${b}, 0) 100%
+    );
+`
+
+const getBackgroundColorDiv = (color: string) => styled.div`
+    background-color: ${color};
+`
 
 const CarouselCard: React.FC<CarouselCardProperties> = ({
     title,
@@ -10,33 +25,28 @@ const CarouselCard: React.FC<CarouselCardProperties> = ({
     backgroundColor = '#f97316',
     backgroundImage,
 }) => {
-    const backgroundColorTag = backgroundImage
-        ? `bg-gradient-to-t to-transparent from-[${backgroundColor}]`
-        : `bg-[${backgroundColor}]`
+    const BackgroundColorDiv = getBackgroundColorDiv(backgroundColor)
+
+    backgroundColor.replace('#', '')
+    console.log(backgroundColor)
+
+    const GradientDiv = getGradientToAlphaDiv(
+        parseInt(backgroundColor.substring(1, 3), 16),
+        parseInt(backgroundColor.substring(3, 5), 16),
+        parseInt(backgroundColor.substring(5, 7), 16)
+    )
 
     return (
-        <div className="p-0 rounded-3xl items-start content-start relative w-full h-full ">
-            <div
-                className={
-                    'toto ' +
-                    // 'min-h-72 max-h80' + backgroundImage &&
-                    // `bg-[${backgroundColor}]`
-                    backgroundColorTag
-                }
-            >
-                {backgroundImage && (
-                    <img
-                        src={backgroundImage}
-                        alt="highlight-card-image"
-                        className="w-full h-full object-cover"
-                    />
-                )}
-                <div
-                    className={
-                        'absolute inset-x bottom-4 flex flex-col p-3 full-width gap-y-2 ' +
-                        backgroundColorTag
-                    }
-                >
+        <BackgroundColorDiv className="p-0 rounded-3xl items-start content-start relative w-full h-full">
+            {backgroundImage && (
+                <img
+                    src={backgroundImage}
+                    alt="highlight-card-image"
+                    className="w-full h-full object-cover"
+                />
+            )}
+            <GradientDiv className="absolute inset-x bottom-0 full-width">
+                <div className="p-3 my-5 flex flex-col gap-y-2">
                     <h3 className="text-sky-950 text-start text-base archivo-black">
                         {title}
                     </h3>
@@ -47,8 +57,8 @@ const CarouselCard: React.FC<CarouselCardProperties> = ({
                         <button className="btn cta">{buttonText}</button>
                     )}
                 </div>
-            </div>
-        </div>
+            </GradientDiv>
+        </BackgroundColorDiv>
     )
 }
 

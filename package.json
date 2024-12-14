@@ -1,46 +1,48 @@
 {
-  "name": "genericmarketplace",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@types/jest": "^29.5.14",
-    "@types/node": "^22.10.2",
-    "@types/react": "^19.0.1",
-    "@types/react-dom": "^19.0.2",
-    "cra-template-typescript": "1.2.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-responsive-carousel": "^3.2.23",
-    "react-scripts": "5.0.1",
-    "typescript": "^5.7.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "daisyui": "^4.12.20",
-    "prettier": "3.4.2",
-    "tailwindcss": "^3.4.16"
-  }
+    "name": "genericmarketplace",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@types/jest": "^29.5.14",
+        "@types/node": "^22.10.2",
+        "@types/react": "^19.0.1",
+        "@types/react-dom": "^19.0.2",
+        "ajv": "^8.17.1",
+        "cra-template-typescript": "1.2.0",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "react-responsive-carousel": "^3.2.23",
+        "react-scripts": "5.0.1",
+        "styled-components": "^6.1.13",
+        "typescript": "^5.7.2"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "daisyui": "^4.12.20",
+        "prettier": "3.4.2",
+        "tailwindcss": "^3.4.16"
+    }
 }

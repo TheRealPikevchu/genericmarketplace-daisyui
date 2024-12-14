@@ -29,7 +29,7 @@ const ProductHighlight: React.FC<ProductHighlightProperties> = () => {
                         title: 'Check out this flash offer!',
                         headline:
                             'Get ready for christmas with this super dupper sale.',
-                        backgroundColor: '#fac584',
+                        backgroundColor: '#f5d59e',
                         backgroundImage: '../assets/gift-box.jpg',
                         buttonText: 'View offer',
                     },
