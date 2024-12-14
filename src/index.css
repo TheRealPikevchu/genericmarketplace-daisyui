@@ -43,3 +43,13 @@ code {
 .menu .no-arrow::after {
     display: none !important;
 }
+
+.btn.cta {
+    border-radius: 1000px;
+    width: fit-content;
+    padding: 12px 32px;
+    background-color: #082f49;
+    border-color: #082f49;
+    font-size: small;
+    font-weight: bold;
+}
