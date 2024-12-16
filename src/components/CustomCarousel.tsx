@@ -1,5 +1,4 @@
-import React, { PropsWithChildren, ReactNode } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useState } from 'react'
 import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
 import { Carousel } from 'react-responsive-carousel'
 import CarouselCardProperties from '../interface/CarouselCardProperties'
@@ -10,6 +9,7 @@ interface CarouselProperties {
     autoplay?: boolean
     interval?: number
     size?: string
+    externalControls?: boolean
 }
 
 const CustomCarousel: React.FC<CarouselProperties> = ({
@@ -17,35 +17,81 @@ const CustomCarousel: React.FC<CarouselProperties> = ({
     interval,
     autoplay = true,
     size,
+    externalControls,
 }) => {
+    const [selectedIndex, setSelectedIndex] = useState(0)
+
+    const [pause, setPause] = useState(autoplay)
+
+    const next = () => setSelectedIndex((prev) => (prev + 1) % cards.length)
+    const prev = () =>
+        setSelectedIndex((prev) => (prev - 1 + cards.length) % cards.length)
+    const switchPause = () => setPause((isPaused) => !isPaused)
+
     return (
-        <div
-            className={
-                'max-w-screen-xl rounded-3xl bg-white m-0 overflow-hidden ' +
-                size
-            }
-        >
-            <Carousel
-                autoPlay={autoplay}
-                infiniteLoop
-                interval={interval}
-                showThumbs={false}
-                showStatus={false}
+        <div>
+            <div
+                className={
+                    'max-w-screen-xl rounded-3xl bg-white m-0 overflow-hidden shadow-xl ' +
+                    size
+                }
             >
-                {cards.map((card) => {
-                    return (
-                        <CarouselCard
-                            title={card.title}
-                            backgroundColor={card.backgroundColor}
-                            backgroundImage={card.backgroundImage}
-                            buttonText={card.buttonText}
-                            headline={card.headline}
-                            link={card.link}
-                            noButton={card.noButton}
-                        />
-                    )
-                })}
-            </Carousel>
+                <Carousel
+                    autoPlay={pause}
+                    infiniteLoop
+                    interval={interval}
+                    showThumbs={false}
+                    showStatus={false}
+                    showArrows={false}
+                    selectedItem={selectedIndex}
+                >
+                    {cards.map((card) => {
+                        return (
+                            <CarouselCard
+                                title={card.title}
+                                backgroundColor={card.backgroundColor}
+                                backgroundImage={card.backgroundImage}
+                                buttonText={card.buttonText}
+                                headline={card.headline}
+                                link={card.link}
+                                noButton={card.noButton}
+                            />
+                        )
+                    })}
+                </Carousel>
+            </div>
+            <div className="flex flex-row justify-center gap-x-3 my-2">
+                <button
+                    onClick={prev}
+                    className="btn btn-circle btn-xs bg-sky-950"
+                >
+                    <span className="material-symbols-outlined text-white text-center text-sm">
+                        chevron_left
+                    </span>
+                </button>
+                <button
+                    onClick={switchPause}
+                    className="btn btn-circle btn-xs bg-sky-950"
+                >
+                    {pause ? (
+                        <span className="material-symbols-outlined text-white text-center text-sm">
+                            pause
+                        </span>
+                    ) : (
+                        <span className="material-symbols-outlined text-white text-center text-sm">
+                            play_arrow
+                        </span>
+                    )}
+                </button>
+                <button
+                    onClick={next}
+                    className="btn btn-circle btn-xs bg-sky-950"
+                >
+                    <span className="material-symbols-outlined text-white text-center text-sm">
+                        chevron_right
+                    </span>
+                </button>
+            </div>
         </div>
     )
 }

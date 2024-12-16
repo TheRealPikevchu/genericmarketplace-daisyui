@@ -46,10 +46,34 @@ code {
 
 .btn.cta {
     border-radius: 1000px;
+    border-width: 0px;
     width: fit-content;
     padding: 12px 32px;
     background-color: #082f49;
-    border-color: #082f49;
     font-size: small;
     font-weight: bold;
+}
+
+h1 {
+    color: #082f49;
+    font-size: 22px;
+    font-family: 'Archivo Black', serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h2 {
+    font-family: 'Archivo Black', serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h2,
+h3,
+p {
+    font-size: 14px;
+}
+
+.icon.white {
+    filter: brightness(0) invert(1);
 }

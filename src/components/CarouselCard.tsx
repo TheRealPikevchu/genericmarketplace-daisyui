@@ -37,15 +37,15 @@ const CarouselCard: React.FC<CarouselCardProperties> = ({
     )
 
     return (
-        <BackgroundColorDiv className="p-0 rounded-3xl items-start content-start relative w-full h-full">
+        <BackgroundColorDiv className="p-0 m-0 rounded-3xl items-start content-start w-full h-full">
             {backgroundImage && (
                 <img
                     src={backgroundImage}
                     alt="highlight-card-image"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover rounded-3xl"
                 />
             )}
-            <GradientDiv className="absolute inset-x bottom-0 full-width">
+            <GradientDiv className="absolute inset-x bottom-0 full-width rounded-3xl">
                 <div className="p-3 my-5 flex flex-col gap-y-2">
                     <h3 className="text-sky-950 text-start text-base archivo-black">
                         {title}
@@ -53,8 +53,10 @@ const CarouselCard: React.FC<CarouselCardProperties> = ({
                     <p className="text-sky-950 text-start text-base">
                         {headline}
                     </p>
-                    {!noButton && (
+                    {!noButton ? (
                         <button className="btn cta">{buttonText}</button>
+                    ) : (
+                        <div className="h-[48px]"></div>
                     )}
                 </div>
             </GradientDiv>
