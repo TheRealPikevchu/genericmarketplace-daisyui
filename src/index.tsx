@@ -1,21 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import Header from './parts/Header'
-import ProductHighlight from './parts/ProductHighlight'
 import LandingPage from './page/Landing'
-import Footer from './parts/Footer'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Layout from './page/Layout'
+import CategoriesPage from './page/Categories'
+import ProductPage from './page/Product'
+import NotFound from './page/NotFound'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
     <React.StrictMode>
-        <div className="bg-white">
-            <Header
-                specialOffer="Flash offer ! See our best deals by clicking"
-                specialOfferLink="http://www.google.fr"
-            />
-            <LandingPage />
-            <Footer />
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<LandingPage />} />
+                    <Route path="categories" element={<CategoriesPage />} />
+                    <Route path="product/:id" element={<ProductPage />} />
+                    <Route path="*" element={<NotFound />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
     </React.StrictMode>
 )

@@ -28,7 +28,6 @@ const CarouselCard: React.FC<CarouselCardProperties> = ({
     const BackgroundColorDiv = getBackgroundColorDiv(backgroundColor)
 
     backgroundColor.replace('#', '')
-    console.log(backgroundColor)
 
     const GradientDiv = getGradientToAlphaDiv(
         parseInt(backgroundColor.substring(1, 3), 16),

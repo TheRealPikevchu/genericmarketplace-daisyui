@@ -1,7 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 interface BurgerMenuProperties {
-    menuItems: string[]
+    menuItems: { name: string; link: string }[]
 }
 
 const BurgerMenu: React.FC<BurgerMenuProperties> = ({ menuItems }) => {
@@ -19,23 +20,25 @@ const BurgerMenu: React.FC<BurgerMenuProperties> = ({ menuItems }) => {
                                 menu
                             </span>
                         </div>
-                        <ul
-                            tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-orange-600 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-                        >
-                            {menuItems.map((item) => (
-                                <li key={'menu-item_' + item}>
-                                    <a>{item}</a>
-                                </li>
-                            ))}
-                        </ul>
+                        <nav>
+                            <ul
+                                tabIndex={0}
+                                className="menu menu-sm dropdown-content bg-orange-600 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                            >
+                                {menuItems.map((item) => (
+                                    <li key={'menu-item_' + item.name}>
+                                        <Link to={item.link}>{item.name}</Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
                     </div>
                     <div className="flex flex-row items-center justify-around py-3 ">
                         <div
                             id="Title"
                             className="flex flex-row items-center text-sky-950"
                         >
-                            <a className="p-0 btn btn-ghost text-xl">
+                            <Link to="/" className="p-0 btn btn-ghost text-xl">
                                 <img
                                     src={'./assets/logo__small.png'}
                                     alt="logo"
@@ -45,18 +48,20 @@ const BurgerMenu: React.FC<BurgerMenuProperties> = ({ menuItems }) => {
                                 <p className="archivo-black text-xs text-sky-950">
                                     GenericMarketplace
                                 </p>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
                 <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1">
-                        {menuItems.map((item) => (
-                            <li id={'menu-item_' + item}>
-                                <a>{item}</a>
-                            </li>
-                        ))}
-                    </ul>
+                    <nav>
+                        <ul className="menu menu-horizontal px-1">
+                            {menuItems.map((item) => (
+                                <li key={'menu-item_' + item.name}>
+                                    <Link to={item.link}>{item.name}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
                 </div>
                 <div className="navbar-end">
                     <div

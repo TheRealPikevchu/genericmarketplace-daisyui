@@ -9,6 +9,7 @@ const ProductHighlight: React.FC<ProductHighlightProperties> = () => {
             <CustomCarousel
                 interval={5000}
                 size="min-h-72 max-h-80"
+                externalControls
                 cards={[
                     {
                         title: 'Welcome to GenericMarketplace.com !',

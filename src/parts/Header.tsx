@@ -38,11 +38,11 @@ const Header: React.FC<HeaderProperties> = ({
                     <div id="LinkSection">
                         <BurgerMenu
                             menuItems={[
-                                'Categories',
-                                'Hot deals',
-                                'New products',
-                                'Second hand',
-                                'Services',
+                                { name: 'Categories', link: 'categories' },
+                                { name: 'Hot deals', link: '' },
+                                { name: 'New products', link: '' },
+                                { name: 'Second hand', link: '' },
+                                { name: 'Services', link: '' },
                             ]}
                         />
                     </div>

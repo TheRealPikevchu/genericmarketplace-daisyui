@@ -42,10 +42,10 @@ const CustomCarousel: React.FC<CarouselProperties> = ({
                     interval={interval}
                     showThumbs={false}
                     showStatus={false}
-                    showArrows={false}
+                    showArrows={!externalControls}
                     selectedItem={selectedIndex}
                 >
-                    {cards.map((card) => {
+                    {cards.map((card, cardIndex) => {
                         return (
                             <CarouselCard
                                 title={card.title}
@@ -55,43 +55,46 @@ const CustomCarousel: React.FC<CarouselProperties> = ({
                                 headline={card.headline}
                                 link={card.link}
                                 noButton={card.noButton}
+                                key={'card_' + cardIndex}
                             />
                         )
                     })}
                 </Carousel>
             </div>
-            <div className="flex flex-row justify-center gap-x-3 my-2">
-                <button
-                    onClick={prev}
-                    className="btn btn-circle btn-xs bg-sky-950"
-                >
-                    <span className="material-symbols-outlined text-white text-center text-sm">
-                        chevron_left
-                    </span>
-                </button>
-                <button
-                    onClick={switchPause}
-                    className="btn btn-circle btn-xs bg-sky-950"
-                >
-                    {pause ? (
+            {externalControls && (
+                <div className="flex flex-row justify-center gap-x-3 my-2">
+                    <button
+                        onClick={prev}
+                        className="btn btn-circle btn-xs bg-sky-950"
+                    >
                         <span className="material-symbols-outlined text-white text-center text-sm">
-                            pause
+                            chevron_left
                         </span>
-                    ) : (
+                    </button>
+                    <button
+                        onClick={switchPause}
+                        className="btn btn-circle btn-xs bg-sky-950"
+                    >
+                        {pause ? (
+                            <span className="material-symbols-outlined text-white text-center text-sm">
+                                pause
+                            </span>
+                        ) : (
+                            <span className="material-symbols-outlined text-white text-center text-sm">
+                                play_arrow
+                            </span>
+                        )}
+                    </button>
+                    <button
+                        onClick={next}
+                        className="btn btn-circle btn-xs bg-sky-950"
+                    >
                         <span className="material-symbols-outlined text-white text-center text-sm">
-                            play_arrow
+                            chevron_right
                         </span>
-                    )}
-                </button>
-                <button
-                    onClick={next}
-                    className="btn btn-circle btn-xs bg-sky-950"
-                >
-                    <span className="material-symbols-outlined text-white text-center text-sm">
-                        chevron_right
-                    </span>
-                </button>
-            </div>
+                    </button>
+                </div>
+            )}
         </div>
     )
 }
