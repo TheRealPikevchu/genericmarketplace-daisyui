@@ -4,6 +4,7 @@ import CustomCarousel from '../components/CustomCarousel'
 interface ProductHighlightProperties {}
 
 const ProductHighlight: React.FC<ProductHighlightProperties> = () => {
+    // TODO : rename this to HighlightCarousel, as Product is not relevant while the content can be anything.
     return (
         <div className="px-8 py-4 bg-white">
             <CustomCarousel

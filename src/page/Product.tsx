@@ -2,7 +2,8 @@ import React from 'react'
 import { Navigate, useLocation, useParams } from 'react-router-dom'
 import Breadcrumbs from '../components/Breadcrumbs'
 import useFetchProduct from '../hooks/useFetchProduct'
-import useFetchProductThumbnail from '../hooks/useFetchProductThumbnail'
+import { Carousel } from 'react-responsive-carousel'
+import useFetchImages from '../hooks/useFetchImages'
 
 interface ProductPageProperties {}
 
@@ -11,31 +12,28 @@ const ProductPage: React.FC<ProductPageProperties> = ({}) => {
     const location = useLocation()
 
     // fetch product
-    const { product, isLoading, error } = useFetchProduct({
+    const productFetch = useFetchProduct({
         productID: id ? id : '-1',
         dummy: true,
     })
-    const { hasThumbLoaded, hasThumbError } = useFetchProductThumbnail({
-        thumbPath: product?.thumbnail,
+
+    const productImagesFetch = useFetchImages({
+        src: productFetch.product?.images,
     })
 
     if (id === undefined) {
         return <Navigate to="/404" />
     }
 
-    // split data accordingly : title, description, images...
+    // TODO : add custom skeleton style
+    //          ultimately : implement a daisy ui theme
+
     // find related products
-    // set up breadcrumbs
 
     return (
         <>
-            <Breadcrumbs path={`${product?.title}`} />
+            <Breadcrumbs path={`${productFetch.product?.title}`} />
             {/**
-                display breadcrumbs
-                display carousel with all available product image
-                    images.map( image => image)
-                title
-                description
                 related products (6 product + related categories card)
                     product cards | category card
                 STUCK TO PAGE BOTTOM :
@@ -44,17 +42,69 @@ const ProductPage: React.FC<ProductPageProperties> = ({}) => {
                                 promo tag
                     add to cart button
              */}
-            <div className="py-4 px-8">
-                {!hasThumbLoaded ? (
+            <div className="py-4 px-8 flex flex-col gap-y-1.5">
+                {productFetch.isLoading ? (
                     <div className="skeleton w-full aspect-video"></div>
                 ) : (
-                    <img
-                        src={product?.thumbnail}
-                        className="w-full aspect-video object-contain"
-                    />
+                    <div>
+                        <Carousel autoPlay={false} showStatus={false}>
+                            {productFetch.product?.images.map(
+                                (image, imageIndex) =>
+                                    productImagesFetch.isLoading[imageIndex] ? (
+                                        <div
+                                            key={
+                                                productFetch.product?.title +
+                                                '-img_' +
+                                                imageIndex
+                                            }
+                                            className="skeleton w-full aspect-video object-contain"
+                                        >
+                                            <img
+                                                src="../assets/img_loading_placeholder.png"
+                                                alt={
+                                                    productFetch.product
+                                                        ?.title +
+                                                    ' image ' +
+                                                    imageIndex
+                                                }
+                                                className="skeleton w-full aspect-video object-contain"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <img
+                                            src={image}
+                                            alt={
+                                                productFetch.product?.title +
+                                                ' image ' +
+                                                imageIndex
+                                            }
+                                            key={
+                                                productFetch.product?.title +
+                                                '-img_' +
+                                                imageIndex
+                                            }
+                                            className="w-full aspect-video object-contain"
+                                        />
+                                    )
+                            )}
+                        </Carousel>
+                    </div>
                 )}
 
-                <h1>{product?.title}</h1>
+                {productFetch.isLoading ? (
+                    <>
+                        <div className="skeleton w-2/3 h-8"></div>
+                        <div className="skeleton w-full h-5"></div>
+                        <div className="skeleton w-4/5 h-5"></div>
+                        <div className="skeleton w-full h-5"></div>
+                    </>
+                ) : (
+                    <>
+                        <h1>{productFetch.product?.title}</h1>
+                        <p>{productFetch.product?.description}</p>
+                        <h2 className="text-sky-950">Similar products</h2>
+                    </>
+                )}
             </div>
         </>
     )

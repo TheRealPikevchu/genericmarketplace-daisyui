@@ -40,7 +40,7 @@ const BurgerMenu: React.FC<BurgerMenuProperties> = ({ menuItems }) => {
                         >
                             <Link to="/" className="p-0 btn btn-ghost text-xl">
                                 <img
-                                    src={'./assets/logo__small.png'}
+                                    src={'../assets/logo__small.png'}
                                     alt="logo"
                                     width="42"
                                     height="42"

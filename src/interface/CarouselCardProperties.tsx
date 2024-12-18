@@ -1,5 +1,5 @@
 interface CarouselCardProperties {
-    title: string
+    title?: string
     headline?: string
     noButton?: boolean
     buttonText?: string

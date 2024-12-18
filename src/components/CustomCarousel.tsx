@@ -19,6 +19,7 @@ const CustomCarousel: React.FC<CarouselProperties> = ({
     size,
     externalControls,
 }) => {
+    // TODO : rename this to CarouselPresenter
     const [selectedIndex, setSelectedIndex] = useState(0)
 
     const [pause, setPause] = useState(autoplay)

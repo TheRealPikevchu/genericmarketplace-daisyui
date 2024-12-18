@@ -12,7 +12,6 @@ const Breadcrumbs: React.FC<BreadcrumbsProperties> = ({ path }) => {
         ? path.split('/')
         : location.pathname.split('/').slice(1)
 
-    console.log(locations)
     // TODO :
     // - fix breadcrumbs on page reloading / nav next prev.
     // - improve breadcrumbs pathing -> ex for a product it should always follow the pattern

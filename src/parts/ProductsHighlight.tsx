@@ -12,8 +12,8 @@ const ProductsHighlight: React.FC<ProductsHighlighProperties> = ({}) => {
                 <ProductCard id="2" />
                 <ProductCard id="3" />
                 <ProductCard id="4" />
-                <ProductCard id="5" />
-                <ProductCard id="6" />
+                <ProductCard id="28" />
+                <ProductCard id="15" />
             </div>
         </div>
     )
