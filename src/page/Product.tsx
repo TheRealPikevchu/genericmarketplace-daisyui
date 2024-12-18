@@ -1,6 +1,8 @@
 import React from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { Navigate, useLocation, useParams } from 'react-router-dom'
 import Breadcrumbs from '../components/Breadcrumbs'
+import useFetchProduct from '../hooks/useFetchProduct'
+import useFetchProductThumbnail from '../hooks/useFetchProductThumbnail'
 
 interface ProductPageProperties {}
 
@@ -9,13 +11,25 @@ const ProductPage: React.FC<ProductPageProperties> = ({}) => {
     const location = useLocation()
 
     // fetch product
+    const { product, isLoading, error } = useFetchProduct({
+        productID: id ? id : '-1',
+        dummy: true,
+    })
+    const { hasThumbLoaded, hasThumbError } = useFetchProductThumbnail({
+        thumbPath: product?.thumbnail,
+    })
+
+    if (id === undefined) {
+        return <Navigate to="/404" />
+    }
+
     // split data accordingly : title, description, images...
     // find related products
     // set up breadcrumbs
 
     return (
         <>
-            <Breadcrumbs />
+            <Breadcrumbs path={`${product?.title}`} />
             {/**
                 display breadcrumbs
                 display carousel with all available product image
@@ -30,7 +44,18 @@ const ProductPage: React.FC<ProductPageProperties> = ({}) => {
                                 promo tag
                     add to cart button
              */}
-            <h1>Product : {id}</h1>
+            <div className="py-4 px-8">
+                {!hasThumbLoaded ? (
+                    <div className="skeleton w-full aspect-video"></div>
+                ) : (
+                    <img
+                        src={product?.thumbnail}
+                        className="w-full aspect-video object-contain"
+                    />
+                )}
+
+                <h1>{product?.title}</h1>
+            </div>
         </>
     )
 }

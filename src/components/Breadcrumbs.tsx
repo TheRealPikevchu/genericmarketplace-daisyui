@@ -2,12 +2,21 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import paths from '../data/paths'
 
-interface BreadcrumbsProperties {}
+interface BreadcrumbsProperties {
+    path?: string
+}
 
-const Breadcrumbs: React.FC<BreadcrumbsProperties> = () => {
+const Breadcrumbs: React.FC<BreadcrumbsProperties> = ({ path }) => {
     const location = useLocation()
-    const locations = location.pathname.split('/').slice(1)
+    const locations = path
+        ? path.split('/')
+        : location.pathname.split('/').slice(1)
 
+    console.log(locations)
+    // TODO :
+    // - fix breadcrumbs on page reloading / nav next prev.
+    // - improve breadcrumbs pathing -> ex for a product it should always follow the pattern
+    //      Home / Categories[product.category] / product.title (max lenght 25)
     return (
         <div className="px-2 breadcrumbs text-sm text-sky-950">
             <ul>
@@ -17,7 +26,12 @@ const Breadcrumbs: React.FC<BreadcrumbsProperties> = () => {
                 {locations.map((location) => (
                     <li key={'breadcrumbs_' + location}>
                         <Link to={'/' + location}>
-                            {paths.find((path) => path.path === location)?.name}
+                            {path
+                                ? location
+                                : paths.find(
+                                      (genericPath) =>
+                                          genericPath.path === location
+                                  )?.name}
                         </Link>
                     </li>
                 ))}
