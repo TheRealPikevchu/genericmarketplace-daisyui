@@ -10,13 +10,20 @@ interface UseGetSimilarProductsOptions {
     dummy?: boolean
 }
 
+interface ProductsResponseProperties {
+    products: number[]
+    total: number
+    skip: number
+    limit: number
+}
+
 const useGetSimilarProducts = ({
     productID,
     url = defaultURL,
     dummy = false,
 }: UseGetSimilarProductsOptions) => {
     const [product, setProduct] = useState<ProductProperties | null>(null)
-    const [products, setProducts] = useState<ProductProperties[] | null>(null)
+    const [products, setProducts] = useState<ProductsResponseProperties>()
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<Error | null>(null)
 
@@ -40,9 +47,8 @@ const useGetSimilarProducts = ({
         const fetchProducts = async () => {
             try {
                 const response = await axios.get(
-                    `${dummy ? debugURL : url}/category/${product?.category}`
+                    `${dummy ? debugURL : url}/category/${product?.category}?select=id`
                 )
-                // TODO : use ID select
                 const productsData = response.data
                 setProducts(productsData)
             } catch (error) {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navigate, useLocation, useParams } from 'react-router-dom'
 import Breadcrumbs from '../components/Breadcrumbs'
 import useFetchProduct from '../hooks/useFetchProduct'
@@ -7,9 +7,7 @@ import useFetchImages from '../hooks/useFetchImages'
 import useGetSimilarProducts from '../hooks/useGetSimilarProducts'
 import ProductCard from '../components/ProductCard'
 
-interface ProductPageProperties {}
-
-const ProductPage: React.FC<ProductPageProperties> = ({}) => {
+const ProductPage: React.FC = () => {
     const { id } = useParams()
     const location = useLocation()
 
@@ -28,7 +26,14 @@ const ProductPage: React.FC<ProductPageProperties> = ({}) => {
         dummy: true,
     })
 
-    console.log(similarProductsFetch.products)
+    const [similarProductsID, setSimilarProducts] = useState<number[]>([])
+    useEffect(() => {
+        similarProductsFetch.isLoading && console.log('still loading')
+        if (similarProductsFetch.products?.products)
+            setSimilarProducts(similarProductsFetch.products?.products)
+
+        similarProductsID?.map((p) => console.dir(p))
+    }, [similarProductsFetch])
 
     if (id === undefined) {
         return <Navigate to="/404" />
@@ -41,21 +46,9 @@ const ProductPage: React.FC<ProductPageProperties> = ({}) => {
 
     // TODO : add custom skeleton style
     //          ultimately : implement a daisy ui theme
-
-    // find related products
-
     return (
         <>
             <Breadcrumbs path={`${productFetch.product?.title}`} />
-            {/**
-                related products (6 product + related categories card)
-                    product cards | category card
-                STUCK TO PAGE BOTTOM :
-                    price section
-                        price   old price
-                                promo tag
-                    add to cart button
-             */}
             <div
                 id="product-description"
                 className="py-4 px-8 flex flex-col gap-y-1.5"
@@ -127,12 +120,21 @@ const ProductPage: React.FC<ProductPageProperties> = ({}) => {
             </div>
             <div
                 id="similar-products"
-                className="py-4 px-8 flex flex-col gap-y-1.5"
+                className="py-4 px-8 flex flex-row gap-y-1.5"
             >
-                {similarProductsFetch.products &&
-                    similarProductsFetch.products.map((product) => (
-                        <ProductCard id={product.id.toString()} />
-                    ))}
+                {productFetch.isLoading || similarProductsFetch.isLoading ? (
+                    <div className="skeleton w-full h-6"></div>
+                ) : (
+                    similarProductsID.map((product) => {
+                        console.log(`from map : ${product}`)
+                        return (
+                            <ProductCard
+                                id={product.toString()}
+                                key={'product' + product.toString()}
+                            />
+                        )
+                    })
+                )}
             </div>
             <div className="md:hidden fixed bottom-0 w-full text-sky-950 bg-white mt-8 z-50">
                 <div className="flex flex-col py-4 px-8 gap-4 over-shadow">

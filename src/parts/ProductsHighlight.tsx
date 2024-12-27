@@ -1,9 +1,7 @@
 import React from 'react'
 import ProductCard from '../components/ProductCard'
 
-interface ProductsHighlighProperties {}
-
-const ProductsHighlight: React.FC<ProductsHighlighProperties> = ({}) => {
+const ProductsHighlight: React.FC = () => {
     return (
         <div className="py-4 px-8">
             <h1>New products</h1>
