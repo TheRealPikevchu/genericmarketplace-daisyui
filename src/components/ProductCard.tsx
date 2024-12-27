@@ -25,7 +25,7 @@ const ProductCard: React.FC<ProductCardProperties> = ({ id }) => {
     return (
         // TODO : use sketeletons while loading data (https://daisyui.com/components/skeleton/)
         <div className="flex flex-col px-1.5 py-3 gap-1.5 w-2/4 text-sky-800 justify-around group">
-            <Link to={'product/' + id}>
+            <Link to={'/product/' + id}>
                 <LoadedImage
                     src={productFetch.product?.thumbnail}
                     alt={productFetch.product?.title}

@@ -47,7 +47,7 @@ const useGetSimilarProducts = ({
         const fetchProducts = async () => {
             try {
                 const response = await axios.get(
-                    `${dummy ? debugURL : url}/category/${product?.category}?select=id`
+                    `${dummy ? debugURL : url}/category/${product?.category}?limit=6&select=id`
                 )
                 const productsData = response.data as ProductsResponseProperties
                 const formattedProductsData = productsData.products.map(
