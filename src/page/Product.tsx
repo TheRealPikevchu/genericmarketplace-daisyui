@@ -29,10 +29,8 @@ const ProductPage: React.FC = () => {
     const [similarProductsID, setSimilarProducts] = useState<number[]>([])
     useEffect(() => {
         similarProductsFetch.isLoading && console.log('still loading')
-        if (similarProductsFetch.products?.products)
-            setSimilarProducts(similarProductsFetch.products?.products)
-
-        similarProductsID?.map((p) => console.dir(p))
+        if (similarProductsFetch.products)
+            setSimilarProducts(similarProductsFetch.products)
     }, [similarProductsFetch])
 
     if (id === undefined) {
@@ -114,19 +112,18 @@ const ProductPage: React.FC = () => {
                         <p className="text-sky-950">
                             {productFetch.product?.description}
                         </p>
-                        <h2 className="text-sky-950">Similar products</h2>
+                        <h2 className="text-sky-950 mt-3">Similar products</h2>
                     </>
                 )}
             </div>
             <div
                 id="similar-products"
-                className="py-4 px-8 flex flex-row gap-y-1.5"
+                className="py-4 px-8 flex flex-row flex-wrap gap-y-1.5 pt-0"
             >
                 {productFetch.isLoading || similarProductsFetch.isLoading ? (
                     <div className="skeleton w-full h-6"></div>
                 ) : (
                     similarProductsID.map((product) => {
-                        console.log(`from map : ${product}`)
                         return (
                             <ProductCard
                                 id={product.toString()}

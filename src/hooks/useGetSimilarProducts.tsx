@@ -11,7 +11,7 @@ interface UseGetSimilarProductsOptions {
 }
 
 interface ProductsResponseProperties {
-    products: number[]
+    products: object[]
     total: number
     skip: number
     limit: number
@@ -23,7 +23,7 @@ const useGetSimilarProducts = ({
     dummy = false,
 }: UseGetSimilarProductsOptions) => {
     const [product, setProduct] = useState<ProductProperties | null>(null)
-    const [products, setProducts] = useState<ProductsResponseProperties>()
+    const [products, setProducts] = useState<number[]>()
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<Error | null>(null)
 
@@ -49,8 +49,20 @@ const useGetSimilarProducts = ({
                 const response = await axios.get(
                     `${dummy ? debugURL : url}/category/${product?.category}?select=id`
                 )
-                const productsData = response.data
-                setProducts(productsData)
+                const productsData = response.data as ProductsResponseProperties
+                const formattedProductsData = productsData.products.map(
+                    (item) => {
+                        if (
+                            typeof item === 'object' &&
+                            item !== null &&
+                            'id' in item
+                        ) {
+                            return item.id
+                        }
+                        return item
+                    }
+                )
+                setProducts(formattedProductsData as number[])
             } catch (error) {
                 setError(error as Error)
             } finally {
