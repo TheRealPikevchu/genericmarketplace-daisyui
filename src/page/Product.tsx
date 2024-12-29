@@ -11,7 +11,6 @@ const ProductPage: React.FC = () => {
     const { id } = useParams()
     const location = useLocation()
 
-    // fetch product
     const productFetch = useFetchProduct({
         productID: id ? id : '-1',
         dummy: true,
@@ -28,7 +27,6 @@ const ProductPage: React.FC = () => {
 
     const [similarProductsID, setSimilarProducts] = useState<number[]>([])
     useEffect(() => {
-        similarProductsFetch.isLoading && console.log('still loading')
         if (similarProductsFetch.products)
             setSimilarProducts(similarProductsFetch.products)
     }, [similarProductsFetch])

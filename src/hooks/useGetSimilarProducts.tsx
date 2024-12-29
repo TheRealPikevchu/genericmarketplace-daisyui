@@ -11,7 +11,7 @@ interface UseGetSimilarProductsOptions {
 }
 
 interface ProductsResponseProperties {
-    products: object[]
+    products: object[] // TODO : replace this with the correct expected typing
     total: number
     skip: number
     limit: number
@@ -47,7 +47,7 @@ const useGetSimilarProducts = ({
         const fetchProducts = async () => {
             try {
                 const response = await axios.get(
-                    `${dummy ? debugURL : url}/category/${product?.category}?limit=6&select=id`
+                    `${dummy ? debugURL : url}/category/${product?.category}?limit=7&select=id`
                 )
                 const productsData = response.data as ProductsResponseProperties
                 const formattedProductsData = productsData.products.map(
@@ -62,7 +62,14 @@ const useGetSimilarProducts = ({
                         return item
                     }
                 )
-                setProducts(formattedProductsData as number[])
+                let filteredProductsData = formattedProductsData.filter(
+                    (item) => item != productID
+                )
+
+                if (filteredProductsData.length > 6) {
+                    filteredProductsData.pop()
+                }
+                setProducts(filteredProductsData as number[])
             } catch (error) {
                 setError(error as Error)
             } finally {

@@ -1,17 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductCard from '../components/ProductCard'
+import useGetNewestProducts from '../hooks/useGetNewestProducts'
 
 const ProductsHighlight: React.FC = () => {
+    const { products, isLoading, error } = useGetNewestProducts({
+        quantity: 6,
+        dummy: true,
+    })
+
+    const [newestProductsID, setNewestProductsID] = useState<string[]>([])
+    useEffect(() => {
+        if (products) setNewestProductsID(products)
+    }, [products])
     return (
         <div className="py-4 px-8">
-            <h1>New products</h1>
+            <h1>Newest products</h1>
             <div className="flex flex-row flex-wrap">
-                <ProductCard id="1" />
-                <ProductCard id="2" />
-                <ProductCard id="3" />
-                <ProductCard id="4" />
-                <ProductCard id="28" />
-                <ProductCard id="15" />
+                {newestProductsID?.map((product) => (
+                    <ProductCard id={product} key={'newest_' + product} />
+                ))}
             </div>
         </div>
     )
