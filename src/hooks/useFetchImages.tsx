@@ -5,23 +5,16 @@ interface UseFetchImagesOptions {
 }
 
 const useFetchImages = ({ src }: UseFetchImagesOptions) => {
-    const [isLoading, setIsLoading] = useState([true])
-    const [hasError, setHasError] = useState([false])
+    const [isLoading, setIsLoading] = useState(true)
+    const [hasError, setHasError] = useState(false)
     const [hasStartedInitialFetch, setHasStartedInitialFetch] = useState(false)
 
     useEffect(() => {
         setHasStartedInitialFetch(true)
         src?.forEach((path, pathIndex) => {
-            setIsLoading(
-                isLoading.map((state, index) =>
-                    index === pathIndex ? true : state
-                )
-            )
-            setHasError(
-                hasError.map((state, index) =>
-                    index === pathIndex ? false : state
-                )
-            )
+            setIsLoading(true)
+
+            setHasError(false)
 
             const image = new Image()
             try {
@@ -32,24 +25,12 @@ const useFetchImages = ({ src }: UseFetchImagesOptions) => {
                 image.src = path
 
                 const handleError = () => {
-                    setHasError(
-                        hasError.map((state, index) =>
-                            index === pathIndex ? true : state
-                        )
-                    )
+                    setHasError(true)
                 }
 
                 const handleLoad = () => {
-                    setIsLoading(
-                        isLoading.map((state, index) =>
-                            index === pathIndex ? false : state
-                        )
-                    )
-                    setHasError(
-                        hasError.map((state, index) =>
-                            index === pathIndex ? false : state
-                        )
-                    )
+                    setIsLoading(false)
+                    setHasError(false)
                 }
 
                 image.onerror = handleError
@@ -59,11 +40,7 @@ const useFetchImages = ({ src }: UseFetchImagesOptions) => {
                     image.removeEventListener('load', handleLoad)
                 }
             } catch (error) {
-                setHasError(
-                    hasError.map((state, index) =>
-                        index === pathIndex ? true : state
-                    )
-                )
+                setHasError(true)
             }
         })
     }, [src])

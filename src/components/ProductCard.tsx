@@ -23,7 +23,6 @@ const ProductCard: React.FC<ProductCardProperties> = ({ id }) => {
     const finalPrice = (price - (price * promotion) / 100).toFixed(2)
 
     return (
-        // TODO : use sketeletons while loading data (https://daisyui.com/components/skeleton/)
         <div className="flex flex-col px-1.5 py-3 gap-1.5 w-2/4 text-sky-800 justify-around group">
             <Link to={'/product/' + id}>
                 <LoadedImage

@@ -26,10 +26,15 @@ const ProductPage: React.FC = () => {
     })
 
     const [similarProductsID, setSimilarProducts] = useState<number[]>([])
+
     useEffect(() => {
         if (similarProductsFetch.products)
             setSimilarProducts(similarProductsFetch.products)
     }, [similarProductsFetch])
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [id])
 
     if (id === undefined) {
         return <Navigate to="/404" />
@@ -42,6 +47,7 @@ const ProductPage: React.FC = () => {
 
     // TODO : add custom skeleton style
     //          ultimately : implement a daisy ui theme
+
     return (
         <>
             <Breadcrumbs path={`${productFetch.product?.title}`} />
@@ -52,11 +58,11 @@ const ProductPage: React.FC = () => {
                 {productFetch.isLoading ? (
                     <div className="skeleton w-full aspect-video"></div>
                 ) : (
-                    <div>
+                    <div id="product-carousel">
                         <Carousel autoPlay={false} showStatus={false}>
                             {productFetch.product?.images.map(
                                 (image, imageIndex) =>
-                                    productImagesFetch.isLoading[imageIndex] ? (
+                                    productImagesFetch.isLoading ? (
                                         <div
                                             key={
                                                 productFetch.product?.title +

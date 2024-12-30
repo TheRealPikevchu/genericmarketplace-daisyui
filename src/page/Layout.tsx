@@ -22,6 +22,7 @@ const Layout: React.FC<LayoutProperties> = () => {
                 specialOfferLink="http://www.google.fr"
             />
             <Outlet />
+            {/* Add a scroll to top button  */}
             <Footer />
         </div>
     )
