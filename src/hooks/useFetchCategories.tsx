@@ -3,7 +3,7 @@ import axios from 'axios'
 import CategoriesProperties from '../interface/CategoryProperties'
 
 const defaultURL = ''
-const debugURL = 'https://dummyjson.com/products/categories'
+const debugURL = 'https://dummyjson.com/products/categories/'
 interface UseFetchCategoriesOptions {
     url?: string
     dummy?: boolean

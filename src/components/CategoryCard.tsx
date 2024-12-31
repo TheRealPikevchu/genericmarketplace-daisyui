@@ -1,37 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import LoadedImage from './LoadedImage'
 import useFetchProduct from '../hooks/useFetchProduct'
+import useFetchCategoryThumb from '../hooks/useFetchCategoryThumb'
 
 interface CategoryCardProperties {
-    slang: string
+    slug: string
     name: string
 }
 
-const CategoryCard: React.FC<CategoryCardProperties> = ({ slang, name }) => {
-    // implement useFetchCategoryThumb
-    // get first product of category
-    // get product thumb
-    // return it as category thumb
-
+const CategoryCard: React.FC<CategoryCardProperties> = ({ slug, name }) => {
     // implement Products page, and link to it with category as param
 
-    const productThumb = ''
-    if (slang === undefined) {
-        return <Navigate to="/404" />
-    }
+    const productThumbFetch = useFetchCategoryThumb({
+        slug: slug,
+        dummy: true,
+    })
+    const [productThumb, setProductThumb] = useState<string>()
+
+    useEffect(() => {
+        setProductThumb(productThumbFetch.thumb)
+    }, [productThumbFetch])
 
     return (
-        <div className="flex flex-col px-1.5 py-3 gap-1.5 w-2/4 text-sky-800 justify-around group">
-            <Link to={'/products?category=' + slang}>
-                <div className="drop-shadow-md w-full md:w-1/3 rounded-lg overflow-hidden flex flex-col-reverse aspect-video p-3">
-                    <div className="flex justify-center bg-white text-center py-3">
-                        <h2 className="text-sky-950">{name}</h2>
+        <div className="flex flex-col px-1.5 py-3 w-full md:w-1/3 justify-around group">
+            <Link to={'/products?category=' + slug}>
+                <div className="drop-shadow-lg group-hover:drop-shadow-xl bg-white rounded-xl overflow-hidden flex flex-col-reverse">
+                    <div className="flex bg-white py-3 w-full">
+                        <h2 className="text-sky-950 text-center w-full group-hover:underline">
+                            {name}
+                        </h2>
                     </div>
                     <LoadedImage
                         src={productThumb}
                         alt={name + ' thumbnail'}
-                        layout="w-full aspect-square object-cover rounded-xl group-hover:shadow-md"
+                        layout="w-full aspect-video object-contain full"
                     />
                 </div>
             </Link>
