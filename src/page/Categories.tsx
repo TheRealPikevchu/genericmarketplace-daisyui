@@ -27,11 +27,10 @@ const CategoriesPage: React.FC = () => {
                                     All products
                                 </h2>
                             </div>
-                            <img
+                            <LoadedImage
                                 src={'../assets/shopping.png'}
                                 alt={'all products thumbnail'}
-                                className="w-full aspect-video object-contain full"
-                                // layout="w-full aspect-video object-contain full"
+                                layout="w-full aspect-video object-contain full"
                             />
                         </div>
                     </Link>
