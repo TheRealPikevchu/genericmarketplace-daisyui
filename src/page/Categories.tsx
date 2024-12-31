@@ -17,6 +17,7 @@ const CategoriesPage: React.FC = () => {
     return (
         <div>
             <Breadcrumbs />
+            {/**TODO : this should be a category card */}
             <div className="flex flex-row flex-wrap py-4 px-8">
                 <h1 className="w-full my-2">Categories</h1>
                 <div className="flex flex-col px-1.5 py-3 w-full md:w-1/3 justify-around group">
