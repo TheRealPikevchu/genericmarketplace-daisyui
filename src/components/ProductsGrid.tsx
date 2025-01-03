@@ -7,10 +7,6 @@ interface ProductsGridProperties {
 }
 
 const ProductsGrid: React.FC<ProductsGridProperties> = ({ products }) => {
-    // TODO : make this work
-    // if (!products?.products.length || products?.products.length <= 0) {
-    //     window.history.pushState({}, '', '/404')
-    // }
     return (
         <>
             {products?.products.map((product) => (

@@ -28,16 +28,19 @@ const useGetCategoryProducts = ({
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const categoryPath = slug !== '' ? `/category/${slug}` : ''
+                // TODO : this is weird to do ?
+                if (slug === '') throw new Error('invalid category.')
+
+                const categoryPath = slug !== 'all' ? `/category/${slug}` : ''
                 const response = await axios.get(
                     `${dummy ? debugURL : url}${categoryPath}?limit=${limit}&skip=${skip}&select=id`
                 )
                 const productsData = response.data as ProductGroupProperties
 
-                console.log('from hook', slug, skip, productsData)
                 setProducts(productsData)
-            } catch (error) {
-                setError(error as Error)
+            } catch (catchedError) {
+                setError(catchedError as Error)
+                console.error(catchedError)
             } finally {
                 setIsLoading(false)
             }
