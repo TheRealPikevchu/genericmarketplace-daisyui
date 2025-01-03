@@ -23,6 +23,11 @@ const useFetchCategoryThumb = ({
     const [thumb, setThumb] = useState<string | undefined>()
 
     useEffect(() => {
+        if (slug === 'all') {
+            setThumb('../assets/logo.png')
+            setIsLoading(false)
+            return
+        }
         const fetchCategory = async () => {
             setIsLoading(true)
             try {

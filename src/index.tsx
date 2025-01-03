@@ -7,6 +7,7 @@ import Layout from './page/Layout'
 import CategoriesPage from './page/Categories'
 import ProductPage from './page/Product'
 import NotFound from './page/NotFound'
+import ProductsPage from './page/Products'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
@@ -15,8 +16,9 @@ root.render(
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<LandingPage />} />
-                    <Route path="categories" element={<CategoriesPage />} />
+                    <Route path="categories/" element={<CategoriesPage />} />
                     <Route path="product/:id" element={<ProductPage />} />
+                    <Route path="products/" element={<ProductsPage />} />
                     <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ProductProperties from '../interface/ProductProperties'
 import axios from 'axios'
+import ProductGroupProperties from '../interface/ProductGroupProperties'
 
 const defaultURL = ''
 const debugURL = 'https://dummyjson.com/products/'
@@ -10,12 +11,13 @@ interface UseGetSimilarProductsOptions {
     dummy?: boolean
 }
 
-interface ProductsResponseProperties {
-    products: object[] // TODO : replace this with the correct expected typing
-    total: number
-    skip: number
-    limit: number
-}
+// interface ProductsResponseProperties {
+//     products: object[] // TODO : replace this with the correct expected typing
+//     total: number
+//     skip: number
+//     limit: number
+// }
+const limit = 6
 
 const useGetSimilarProducts = ({
     productID,
@@ -47,9 +49,9 @@ const useGetSimilarProducts = ({
         const fetchProducts = async () => {
             try {
                 const response = await axios.get(
-                    `${dummy ? debugURL : url}/category/${product?.category}?limit=7&select=id`
+                    `${dummy ? debugURL : url}/category/${product?.category}?limit=${limit + 1}&select=id`
                 )
-                const productsData = response.data as ProductsResponseProperties
+                const productsData = response.data as ProductGroupProperties
                 const formattedProductsData = productsData.products.map(
                     (item) => {
                         if (
@@ -63,10 +65,10 @@ const useGetSimilarProducts = ({
                     }
                 )
                 let filteredProductsData = formattedProductsData.filter(
-                    (item) => item != productID
+                    (item) => item != parseInt(productID)
                 )
 
-                if (filteredProductsData.length > 6) {
+                if (filteredProductsData.length > limit) {
                     filteredProductsData.pop()
                 }
                 setProducts(filteredProductsData as number[])
