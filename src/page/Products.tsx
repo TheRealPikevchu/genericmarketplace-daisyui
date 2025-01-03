@@ -35,6 +35,7 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
         const page = searchParams.get('page')
         if (page !== null) {
             setCurrentPage(parseInt(page))
+            console.log(page)
         }
     }, [searchParams, categories, isLoading])
 
@@ -49,11 +50,6 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
                         page={currentPageID}
                         maxElements={pageMaxElements}
                     />
-                    <div className="join w-full flex justify-center">
-                        <button className="join-item btn">«</button>
-                        <button className="join-item btn">Page 22</button>
-                        <button className="join-item btn">»</button>
-                    </div>
                 </div>
             </div>
         </>
