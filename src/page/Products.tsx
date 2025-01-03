@@ -22,6 +22,7 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
 
         setCategoryFromParams(category)
         setPageFromParams(page)
+        // TODO : WHY NO RELOAD ON SEARCHPARAMS CHANGE ?????
     }, [searchParams])
 
     useEffect(() => {

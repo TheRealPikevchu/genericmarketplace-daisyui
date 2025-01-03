@@ -38,6 +38,9 @@ const ProductsCategoryFilter: React.FC<ProductsCategoryFilterProperties> = ({
     }
 
     // TODO : if category is wrong or pageID > totalPage, go to 404
+    // TODO : porperly make use of theme
+    const buttonLayout =
+        'join-item btn btn-sm md:btn-md border-orange-300 bg-orange-200 text-sky-800 hover:bg-orange-500 hover:border-orange-500 hover:text-white'
 
     return (
         <>
@@ -45,14 +48,14 @@ const ProductsCategoryFilter: React.FC<ProductsCategoryFilterProperties> = ({
             {totalPages > 1 && (
                 <div className="join w-full flex justify-center">
                     <button
-                        className="join-item btn btn-sm md:btn-md"
+                        className={buttonLayout}
                         onClick={() => navigateToPage(0)}
                     >
                         «
                     </button>
                     {Array.from({ length: totalPages }, (_, index) => (
                         <button
-                            className="join-item btn btn-sm md:btn-md"
+                            className={buttonLayout}
                             onClick={() => navigateToPage(index)}
                             key={index}
                         >
@@ -60,7 +63,7 @@ const ProductsCategoryFilter: React.FC<ProductsCategoryFilterProperties> = ({
                         </button>
                     ))}
                     <button
-                        className="join-item btn btn-sm md:btn-md"
+                        className={buttonLayout}
                         onClick={() => navigateToPage(totalPages - 1)}
                     >
                         »

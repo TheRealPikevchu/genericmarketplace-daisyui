@@ -156,7 +156,7 @@ const ProductPage: React.FC = () => {
                             </div>
                         )}
                     </div>
-                    <button className="btn btn-lg w-full bg-orange-600 border-orange-500 text-white">
+                    <button className="btn btn-lg w-full bg-orange-600 border-orange-500 text-white hover:bg-sky-950">
                         Add to cart
                     </button>
                 </div>
