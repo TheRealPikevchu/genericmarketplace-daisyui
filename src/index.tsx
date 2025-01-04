@@ -8,6 +8,7 @@ import CategoriesPage from './page/Categories'
 import ProductPage from './page/Product'
 import NotFound from './page/NotFound'
 import ProductsPage from './page/Products'
+import ShoppingCartPage from './page/ShoppingCart'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
@@ -19,6 +20,7 @@ root.render(
                     <Route path="categories/" element={<CategoriesPage />} />
                     <Route path="product/:id" element={<ProductPage />} />
                     <Route path="products/" element={<ProductsPage />} />
+                    <Route path="cart/" element={<ShoppingCartPage />} />
                     <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>

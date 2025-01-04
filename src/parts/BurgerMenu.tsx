@@ -6,6 +6,7 @@ interface BurgerMenuProperties {
 }
 
 const BurgerMenu: React.FC<BurgerMenuProperties> = ({ menuItems }) => {
+    // TODO : sticky on mobile ?
     return (
         <>
             <div className="navbar bg-base-orange-600 justify-evenly items-center w-full px-4 py-3">
@@ -79,9 +80,12 @@ const BurgerMenu: React.FC<BurgerMenuProperties> = ({ menuItems }) => {
                             </a>
                         </button>
                         <button className="p-0 no-underline">
-                            <a className="btn btn-ghost p-0 text-sky-950 text-3xl no-underline mx-0.5">
+                            <Link
+                                to="/cart"
+                                className="btn btn-ghost p-0 text-sky-950 text-3xl no-underline mx-0.5"
+                            >
                                 shopping_cart
-                            </a>
+                            </Link>
                         </button>
                     </div>
                 </div>

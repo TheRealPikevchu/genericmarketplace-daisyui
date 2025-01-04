@@ -34,6 +34,7 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
                     (c) => c.slug === categoryFromParams
                 )?.name
                 setName(category || 'Something went wrong...')
+                // TODO : manage error case => 404
             }
         }
     }, [categories, isLoading, categoryFromParams])
