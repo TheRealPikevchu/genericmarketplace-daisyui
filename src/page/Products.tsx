@@ -47,6 +47,7 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
                 {!isLoading && (
                     <div className="flex flex-row flex-wrap">
                         <ProductsCategoryFilter
+                            key={`${categoryFromParams}-${pageFromParams}`}
                             slug={categoryFromParams}
                             page={pageFromParams}
                             maxElements={pageMaxElements}

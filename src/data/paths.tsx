@@ -15,6 +15,10 @@ const paths = [
         path: 'login',
         name: 'Login',
     },
+    {
+        path: 'cart',
+        name: 'Cart',
+    },
 ]
 
 export default paths

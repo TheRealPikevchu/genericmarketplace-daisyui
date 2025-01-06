@@ -6,8 +6,15 @@ import { Link } from 'react-router-dom'
 interface CartCardProperties {
     ID: string
     quantity: number
+    updateValue: (ID: string, value: number, price: number) => void
+    removeItem: (ID: string, price: number) => void
 }
-const CartCard: React.FC<CartCardProperties> = ({ ID, quantity }) => {
+const CartCard: React.FC<CartCardProperties> = ({
+    ID,
+    quantity,
+    updateValue,
+    removeItem,
+}) => {
     const { product, isLoading, error } = useFetchProduct({
         productID: ID,
         dummy: true,
@@ -78,19 +85,24 @@ const CartCard: React.FC<CartCardProperties> = ({ ID, quantity }) => {
                             className={
                                 buttonStyle + ' material-symbols-outlined'
                             }
+                            onClick={() => updateValue(ID, finalPrice, -1)}
                         >
-                            add
+                            remove
                         </button>
                         <span className={buttonStyle}>{quantity}</span>
                         <button
                             className={
                                 buttonStyle + ' material-symbols-outlined'
                             }
+                            onClick={() => updateValue(ID, finalPrice, 1)}
                         >
-                            remove
+                            add
                         </button>
                     </div>
-                    <button className="material-symbols-outlined btn btn-ghost h-auto min-h-fit p-0 text-lg no-underline">
+                    <button
+                        className="material-symbols-outlined btn btn-ghost h-auto min-h-fit p-0 text-lg no-underline"
+                        onClick={() => removeItem(ID, finalPrice)}
+                    >
                         delete
                     </button>
                 </div>
