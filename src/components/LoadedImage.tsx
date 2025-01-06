@@ -17,7 +17,7 @@ const LoadedImage: React.FC<LoadedImageProperties> = ({ src, alt, layout }) => {
     return (
         <>
             {isLoading ? (
-                <div className={`skeleton + ${layout}`}></div>
+                <div className={`skeleton ${layout}`}></div>
             ) : (
                 <img src={src} alt={alt} className={layout}></img>
             )}
