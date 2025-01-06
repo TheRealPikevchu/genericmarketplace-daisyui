@@ -10,8 +10,6 @@ interface CategoryCardProperties {
 }
 
 const CategoryCard: React.FC<CategoryCardProperties> = ({ slug, name }) => {
-    // implement Products page, and link to it with category as param
-
     const productThumbFetch = useFetchCategoryThumb({
         slug: slug,
         dummy: true,

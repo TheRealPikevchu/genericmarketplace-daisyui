@@ -1,13 +1,13 @@
 import React from 'react'
-import ProductHighlight from '../parts/ProductHighlight'
 import ProductsHighlight from '../parts/ProductsHighlight'
+import HighlightCarousel from '../parts/ProductHighlight'
 
 interface LandingPageProperties {}
 
 const LandingPage: React.FC<LandingPageProperties> = ({}) => {
     return (
         <>
-            <ProductHighlight />
+            <HighlightCarousel />
             <ProductsHighlight />
         </>
     )

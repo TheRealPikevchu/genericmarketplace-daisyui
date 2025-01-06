@@ -10,8 +10,9 @@ const ProductsHighlight: React.FC = () => {
 
     const [newestProductsID, setNewestProductsID] = useState<string[]>([])
     useEffect(() => {
-        if (products) setNewestProductsID(products)
-    }, [products])
+        if (!isLoading && products) setNewestProductsID(products)
+    }, [products, isLoading])
+
     return (
         <div className="py-4 px-8">
             <h1>Newest products</h1>

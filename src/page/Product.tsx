@@ -10,7 +10,6 @@ import useAddToCart from '../hooks/useAddToCart'
 
 const ProductPage: React.FC = () => {
     const { id } = useParams()
-    const location = useLocation()
 
     const { product, isLoading, error } = useFetchProduct({
         productID: id ? id : '-1',

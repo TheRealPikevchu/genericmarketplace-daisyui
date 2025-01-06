@@ -12,14 +12,13 @@ interface CarouselProperties {
     externalControls?: boolean
 }
 
-const CustomCarousel: React.FC<CarouselProperties> = ({
+const CarouselPresenter: React.FC<CarouselProperties> = ({
     cards,
     interval,
     autoplay = true,
     size,
     externalControls,
 }) => {
-    // TODO : rename this to CarouselPresenter
     const [selectedIndex, setSelectedIndex] = useState(0)
 
     const [pause, setPause] = useState(autoplay)
@@ -100,4 +99,4 @@ const CustomCarousel: React.FC<CarouselProperties> = ({
     )
 }
 
-export default CustomCarousel
+export default CarouselPresenter

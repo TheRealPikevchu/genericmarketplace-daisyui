@@ -1,6 +1,7 @@
 import React from 'react'
 import CarouselCardProperties from '../interface/CarouselCardProperties'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const getGradientToAlphaDiv = (r: number, g: number, b: number) => styled.div`
     background: rgba(0, 0, 0, 0);
@@ -52,8 +53,10 @@ const CarouselCard: React.FC<CarouselCardProperties> = ({
                     <p className="text-sky-950 text-start text-base">
                         {headline}
                     </p>
-                    {!noButton ? (
-                        <button className="btn cta">{buttonText}</button>
+                    {!noButton && link ? (
+                        <Link to={link} className="btn cta">
+                            {buttonText}
+                        </Link>
                     ) : (
                         <div className="h-[48px]"></div>
                     )}

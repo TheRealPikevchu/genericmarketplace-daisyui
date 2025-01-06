@@ -12,12 +12,9 @@ const Header: React.FC<HeaderProperties> = ({
     specialOfferLink,
 }) => {
     return (
-        <div id="Header" className="flex flex-col items-center">
+        <div className="sticky top-0 z-50 flex flex-col items-center">
             {specialOffer && (
-                <div
-                    id="SpecialOffer"
-                    className="flex flex-col py-1.5 w-full bg-sky-950"
-                >
+                <div className="flex flex-col py-1.5 w-full bg-sky-950">
                     <p className="text-center text-white text-sm font-thin">
                         {specialOffer}{' '}
                         <a
@@ -30,12 +27,9 @@ const Header: React.FC<HeaderProperties> = ({
                     </p>
                 </div>
             )}
-            <div
-                id="NavigationMenu"
-                className="md:hidden flex flex-col w-full bg-orange-500"
-            >
-                <div id="MainMenu" className="flex flex-col pb-3 text-sky-950">
-                    <div id="LinkSection">
+            <div className="md:hidden flex flex-col w-full bg-orange-500">
+                <div className="flex flex-col pb-3 text-sky-950">
+                    <div>
                         <BurgerMenu
                             menuItems={[
                                 { name: 'Categories', link: 'categories' },
@@ -46,7 +40,7 @@ const Header: React.FC<HeaderProperties> = ({
                             ]}
                         />
                     </div>
-                    <div id="SearchSection" className="px-4 max-w-5xl">
+                    <div className="px-4 max-w-5xl">
                         <SearchBar />
                     </div>
                 </div>

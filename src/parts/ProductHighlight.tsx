@@ -1,13 +1,10 @@
 import React from 'react'
-import CustomCarousel from '../components/CustomCarousel'
+import CarouselPresenter from '../components/CustomCarousel'
 
-interface ProductHighlightProperties {}
-
-const ProductHighlight: React.FC<ProductHighlightProperties> = () => {
-    // TODO : rename this to HighlightCarousel, as Product is not relevant while the content can be anything.
+const HighlightCarousel: React.FC = () => {
     return (
         <div className="px-8 py-4 bg-white">
-            <CustomCarousel
+            <CarouselPresenter
                 interval={5000}
                 size="min-h-72 max-h-80"
                 externalControls
@@ -26,6 +23,7 @@ const ProductHighlight: React.FC<ProductHighlightProperties> = () => {
                         backgroundColor: '#fac584',
                         backgroundImage: '../assets/highlight1.jpg',
                         buttonText: 'View product',
+                        link: '/product/145',
                     },
                     {
                         title: 'Check out this flash offer!',
@@ -34,6 +32,7 @@ const ProductHighlight: React.FC<ProductHighlightProperties> = () => {
                         backgroundColor: '#f5d59e',
                         backgroundImage: '../assets/gift-box.jpg',
                         buttonText: 'View offer',
+                        link: '/products?category=mens-watches',
                     },
                 ]}
             />
@@ -41,4 +40,4 @@ const ProductHighlight: React.FC<ProductHighlightProperties> = () => {
     )
 }
 
-export default ProductHighlight
+export default HighlightCarousel
