@@ -27,7 +27,7 @@ const useFetchAuth = ({ username, password }: UseFetchAuthProperties) => {
     const [auth, setAuth] = useState<UseFetchAuthResponse | null>()
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<Error | null>(null)
-    const [token, setToken] = useLocalStorage<string>('accessToken')
+    const [token, setToken] = useLocalStorage<string | null>('accessToken')
 
     const me = async () => {
         setIsLoading(true)
@@ -101,6 +101,10 @@ const useFetchAuth = ({ username, password }: UseFetchAuthProperties) => {
             setAuth(null)
         }
     }, [token])
+
+    useEffect(() => {
+        if (error?.message === 'Token Expired!') setToken(null)
+    }, [error])
 
     return { auth, isLoading, error }
 }

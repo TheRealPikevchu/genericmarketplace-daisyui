@@ -1,16 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import paths from '../data/paths'
 
 interface BreadcrumbsProperties {
-    path?: string
+    crumbs: {
+        name: string | undefined
+        path: string | undefined
+    }[]
 }
 
-const Breadcrumbs: React.FC<BreadcrumbsProperties> = ({ path }) => {
-    const location = useLocation()
-    const locations = path
-        ? path.split('/')
-        : location.pathname.split('/').slice(1)
+const Breadcrumbs: React.FC<BreadcrumbsProperties> = ({ crumbs }) => {
+    const [breadcrumbs, setBreadcrumbs] = useState<
+        {
+            name: string | undefined
+            path: string | undefined
+        }[]
+    >()
+
+    useEffect(() => {
+        crumbs.unshift({ name: 'Home', path: '' })
+        setBreadcrumbs(crumbs)
+    }, [crumbs])
 
     // TODO :
     // simply pass breadcrumbs name and page into the props... and use location.pahtname if nothing is given
@@ -20,19 +30,9 @@ const Breadcrumbs: React.FC<BreadcrumbsProperties> = ({ path }) => {
     return (
         <div className="px-2 breadcrumbs text-sm text-sky-950">
             <ul>
-                <li key="breadcrumbs_home">
-                    <Link to="/">Home</Link>
-                </li>
-                {locations.map((location) => (
-                    <li key={'breadcrumbs_' + location}>
-                        <Link to={'/' + location}>
-                            {path
-                                ? location
-                                : paths.find(
-                                      (genericPath) =>
-                                          genericPath.path === location
-                                  )?.name}
-                        </Link>
+                {breadcrumbs?.map((crumb, index) => (
+                    <li key={'breadcrumbs_' + crumb.name + '_' + index}>
+                        <Link to={'' + crumb.path}>{crumb.name}</Link>
                     </li>
                 ))}
             </ul>

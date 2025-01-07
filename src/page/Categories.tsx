@@ -16,7 +16,9 @@ const CategoriesPage: React.FC = () => {
 
     return (
         <div>
-            <Breadcrumbs />
+            <Breadcrumbs
+                crumbs={[{ name: 'Categories', path: '/categories' }]}
+            />
             <div className="flex flex-row flex-wrap py-4 px-8">
                 <h1 className="w-full my-2">Categories</h1>
                 {/**TODO :  this should be a category card

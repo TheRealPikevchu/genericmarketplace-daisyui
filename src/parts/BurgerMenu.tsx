@@ -112,7 +112,7 @@ const BurgerMenu: React.FC<BurgerMenuProperties> = ({ menuItems }) => {
                         </button>
                         <button className="relative p-0 no-underline">
                             {cartCount > 0 && (
-                                <div className="indicator absolute top-1/4 right-1">
+                                <div className="indicator absolute top-1/4 right-1 pointer-events-none">
                                     <span className="numeric px-1 indicator-item badge bg-green-500 border-green-500 font-bold text-white">
                                         {cartCount}
                                     </span>

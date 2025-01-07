@@ -39,7 +39,7 @@ const LoginPage: React.FC = () => {
 
     return (
         <div className="flex flex-col py-4 px-8 gap-y-3">
-            <Breadcrumbs />
+            <Breadcrumbs crumbs={[{ name: 'Login', path: '/login' }]} />
             <div className="flex flex-col items-center justify-center">
                 {!isLoading && !auth ? (
                     <div className="w-full max-w-sm p-6">

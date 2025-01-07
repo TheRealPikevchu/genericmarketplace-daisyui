@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate, useLocation, useParams } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import Breadcrumbs from '../components/Breadcrumbs'
 import useFetchProduct from '../hooks/useFetchProduct'
 import { Carousel } from 'react-responsive-carousel'
@@ -27,6 +27,8 @@ const ProductPage: React.FC = () => {
 
     const [storedCart, addToCart] = useAddToCart()
 
+    const navigate = useNavigate()
+
     useEffect(() => {
         if (similarProductsFetch.products)
             setSimilarProducts(similarProductsFetch.products)
@@ -48,6 +50,8 @@ const ProductPage: React.FC = () => {
                 product.price -
                     (product.price * product.discountPercentage) / 100
             )
+        } else if (error || (!isLoading && !product)) {
+            navigate('/404')
         }
     }, [product, isLoading])
 
@@ -55,12 +59,18 @@ const ProductPage: React.FC = () => {
         return <Navigate to="/404" />
     }
 
-    // TODO : add custom skeleton style
-    //          ultimately : implement a daisy ui theme
-
+    // TODO : improve breadcrumbs to use category instead of all products
     return (
         <>
-            <Breadcrumbs path={`${product?.title}`} />
+            <Breadcrumbs
+                crumbs={[
+                    { name: 'Products', path: '/products' },
+                    {
+                        name: product?.title,
+                        path: '/product/' + product?.id.toString(),
+                    },
+                ]}
+            />
             <div
                 id="product-description"
                 className="py-4 px-8 flex flex-col gap-y-1.5"

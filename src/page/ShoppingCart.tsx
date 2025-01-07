@@ -22,7 +22,7 @@ const ShoppingCartPage: React.FC = () => {
 
     return (
         <div className="flex flex-col py-4 px-8 gap-y-3">
-            <Breadcrumbs />
+            <Breadcrumbs crumbs={[{ name: 'Shopping cart', path: '/cart' }]} />
             <h1 className="w-full bg-white">Shopping cart</h1>
             {storedCart && storedCart.length > 0 ? (
                 <>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import Breadcrumbs from '../components/Breadcrumbs'
 import ProductsCategoryFilter from '../filters/ProductsCategoryFilter'
 import useFetchCategories from '../hooks/useFetchCategories'
@@ -15,6 +15,10 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
 
     const { categories, error, isLoading } = useFetchCategories()
     const [categoryName, setName] = useState<string>('All products')
+
+    const [crumbs, setCrumbs] = useState<{ name: string; path: string }>()
+
+    const navitage = useNavigate()
 
     useEffect(() => {
         const category = searchParams.get('category') || 'all'
@@ -32,7 +36,13 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
                 const category = categories.find(
                     (c) => c.slug === categoryFromParams
                 )?.name
+                if (!category) navitage('/404')
                 setName(category || 'Something went wrong...')
+                if (category)
+                    setCrumbs({
+                        name: category,
+                        path: '/products?category=' + categoryFromParams,
+                    })
                 // TODO : manage error case => 404
             }
         }
@@ -40,7 +50,9 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
 
     return (
         <>
-            <Breadcrumbs />
+            <Breadcrumbs
+                crumbs={[crumbs ?? { name: 'Products', path: '/products' }]}
+            />
             <div className="py-4 px-8">
                 <h1>{categoryName}</h1>
                 {!isLoading && (
