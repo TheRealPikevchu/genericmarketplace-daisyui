@@ -3,6 +3,7 @@ import Breadcrumbs from '../components/Breadcrumbs'
 import useFetchAuth from '../hooks/useFetchAuth'
 import { useLocalStorage } from '@uidotdev/usehooks'
 import LoadedImage from '../components/LoadedImage'
+import { useNavigate } from 'react-router-dom'
 
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState<string>()
@@ -10,27 +11,30 @@ const LoginPage: React.FC = () => {
     const [token, setToken] = useLocalStorage<string | null>('accessToken')
     const [errorMessage, setErrorMessage] = useState<string>()
 
+    const navigate = useNavigate()
+
     const { auth, isLoading, error } = useFetchAuth({
         username: username,
         password: password,
     })
-
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const formData = new FormData(e.currentTarget)
-        const username = formData.get('username') as string
-        const password = formData.get('password') as string
-        setUsername(username)
-        setPassword(password)
-    }
 
     useEffect(() => {
         if (error?.message !== 'Invalid/Expired Token!')
             setErrorMessage(error?.message)
     }, [error])
 
+    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        const formData = new FormData(e.currentTarget)
+        const formUsername = formData.get('username') as string
+        const formPassword = formData.get('password') as string
+        setUsername(formUsername)
+        setPassword(formPassword)
+    }
+
     const handleDisconnect = () => {
         setToken(null)
+        navigate('/')
     }
 
     return (
@@ -86,13 +90,13 @@ const LoginPage: React.FC = () => {
                     </div>
                 ) : (
                     <div className="w-full max-w-sm p-6">
-                        <div className="flex flex-row items-center justify-between mb-3">
-                            <h1>Hello {auth?.firstName}!</h1>
+                        <div className="flex flex-row items-center gap-3 mb-3">
                             <LoadedImage
                                 src={auth?.image}
                                 alt={auth?.username + '_pp'}
                                 layout="aspect-square rounded-full w-12"
                             />
+                            <h1>Hello, {auth?.firstName}!</h1>
                         </div>
                         <button
                             className="btn btn-primary bg-sky-950 border-sky-950 text-white w-full"
