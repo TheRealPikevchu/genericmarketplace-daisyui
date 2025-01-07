@@ -10,7 +10,6 @@ interface ProductCardProperties {
 const ProductCard: React.FC<ProductCardProperties> = ({ id }) => {
     const productFetch = useFetchProduct({
         productID: id ? id : '-1',
-        dummy: true,
     })
 
     if (id === undefined) {

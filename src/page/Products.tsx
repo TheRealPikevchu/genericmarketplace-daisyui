@@ -13,7 +13,7 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
     const [categoryFromParams, setCategoryFromParams] = useState<string>('all')
     const [pageFromParams, setPageFromParams] = useState<number>(0)
 
-    const { categories, error, isLoading } = useFetchCategories({ dummy: true })
+    const { categories, error, isLoading } = useFetchCategories()
     const [categoryName, setName] = useState<string>('All products')
 
     useEffect(() => {

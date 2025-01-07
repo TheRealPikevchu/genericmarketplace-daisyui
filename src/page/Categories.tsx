@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import LoadedImage from '../components/LoadedImage'
 
 const CategoriesPage: React.FC = () => {
-    const categoriesFetch = useFetchCategories({ dummy: true })
+    const categoriesFetch = useFetchCategories()
     const [categories, setCategories] = useState<CategoriesProperties[]>([])
 
     useEffect(() => {

@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import CategoriesProperties from '../interface/CategoryProperties'
+import useDummy from '../data/dummyjson'
 
 const defaultURL = ''
 const debugURL = 'https://dummyjson.com/products/categories/'
-interface UseFetchCategoriesOptions {
-    url?: string
-    dummy?: boolean
-}
 
-const useFetchCategories = ({
-    url = defaultURL,
-    dummy = false,
-}: UseFetchCategoriesOptions) => {
+const useFetchCategories = () => {
     const [categories, setCategories] = useState<CategoriesProperties[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<Error | null>(null)
@@ -21,7 +15,9 @@ const useFetchCategories = ({
         const fetchCategories = async () => {
             setIsLoading(true)
             try {
-                const response = await axios.get(`${dummy ? debugURL : url}`)
+                const response = await axios.get(
+                    `${useDummy ? debugURL : defaultURL}`
+                )
                 const categoriesData = response.data as CategoriesProperties[]
                 setCategories(categoriesData)
             } catch (error) {
@@ -31,7 +27,7 @@ const useFetchCategories = ({
             }
         }
         fetchCategories()
-    }, [url])
+    }, [defaultURL])
 
     return { categories, isLoading, error }
 }

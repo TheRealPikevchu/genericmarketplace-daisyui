@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useGetCart from '../hooks/useGetCart'
+import useFetchAuth from '../hooks/useFetchAuth'
+import LoadedImage from '../components/LoadedImage'
 
 interface BurgerMenuProperties {
     menuItems: { name: string; link: string }[]
@@ -10,6 +12,8 @@ const BurgerMenu: React.FC<BurgerMenuProperties> = ({ menuItems }) => {
     const [storedCart] = useGetCart()
 
     const [cartCount, setCartCount] = useState<number>(0)
+
+    const { auth, isLoading, error } = useFetchAuth({})
 
     useEffect(() => {
         if (storedCart && storedCart.length > 0) {
@@ -84,15 +88,27 @@ const BurgerMenu: React.FC<BurgerMenuProperties> = ({ menuItems }) => {
                         id="UserMenu"
                         className="flex flex-row material-symbols-outlined"
                     >
-                        <button className="p-0 no-underline">
+                        {/* <button className="p-0 no-underline">
                             <a className="btn btn-ghost p-0 text-sky-950 text-3xl no-underline mx-0.5">
                                 chat_bubble
                             </a>
-                        </button>
+                        </button> */}
                         <button className="p-0 no-underline">
-                            <a className="btn btn-ghost p-0 text-sky-950 text-3xl no-underline mx-0.5">
-                                person
-                            </a>
+                            <Link to="login">
+                                {!isLoading &&
+                                    (auth ? (
+                                        <LoadedImage
+                                            key={auth.username + '_pp'}
+                                            src={auth.image}
+                                            alt={auth.username + '_pp'}
+                                            layout="w-8 aspect-square rounded-full bg-white"
+                                        />
+                                    ) : (
+                                        <span className="btn btn-ghost p-0 text-sky-950 text-3xl no-underline mx-0.5">
+                                            person
+                                        </span>
+                                    ))}
+                            </Link>
                         </button>
                         <button className="relative p-0 no-underline">
                             {cartCount > 0 && (

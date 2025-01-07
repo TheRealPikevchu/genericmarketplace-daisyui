@@ -9,6 +9,7 @@ import ProductPage from './page/Product'
 import NotFound from './page/NotFound'
 import ProductsPage from './page/Products'
 import ShoppingCartPage from './page/ShoppingCart'
+import LoginPage from './page/Login'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
@@ -21,6 +22,7 @@ root.render(
                     <Route path="product/:id" element={<ProductPage />} />
                     <Route path="products/" element={<ProductsPage />} />
                     <Route path="cart/" element={<ShoppingCartPage />} />
+                    <Route path="login/" element={<LoginPage />} />
                     <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>

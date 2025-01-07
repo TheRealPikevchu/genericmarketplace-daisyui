@@ -5,7 +5,6 @@ import useGetNewestProducts from '../hooks/useGetNewestProducts'
 const ProductsHighlight: React.FC = () => {
     const { products, isLoading, error } = useGetNewestProducts({
         quantity: 6,
-        dummy: true,
     })
 
     const [newestProductsID, setNewestProductsID] = useState<string[]>([])

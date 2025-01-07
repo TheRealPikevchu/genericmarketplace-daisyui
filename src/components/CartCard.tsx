@@ -17,7 +17,6 @@ const CartCard: React.FC<CartCardProperties> = ({
 }) => {
     const { product, isLoading, error } = useFetchProduct({
         productID: ID,
-        dummy: true,
     })
 
     const [price, setPrice] = useState<number>(0)

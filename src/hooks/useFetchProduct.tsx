@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import ProductProperties from '../interface/ProductProperties'
 import axios from 'axios'
+import useDummy from '../data/dummyjson'
 
 const defaultURL = ''
 const debugURL = 'https://dummyjson.com/products/'
 interface UseFetchProductOptions {
     productID: string
-    url?: string
-    dummy?: boolean
 }
 
-const useFetchProduct = ({
-    productID,
-    url = defaultURL,
-    dummy = false,
-}: UseFetchProductOptions) => {
+const useFetchProduct = ({ productID }: UseFetchProductOptions) => {
     const [product, setProduct] = useState<ProductProperties | null>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<Error | null>(null)
@@ -24,7 +19,7 @@ const useFetchProduct = ({
             setIsLoading(true)
             try {
                 const response = await axios.get(
-                    `${dummy ? debugURL : url}${productID}`
+                    `${useDummy ? debugURL : defaultURL}${productID}`
                 )
                 const productData = response.data
                 setProduct(productData)
@@ -35,7 +30,7 @@ const useFetchProduct = ({
             }
         }
         fetchProduct()
-    }, [productID, url])
+    }, [productID, defaultURL])
 
     return { product, isLoading, error }
 }

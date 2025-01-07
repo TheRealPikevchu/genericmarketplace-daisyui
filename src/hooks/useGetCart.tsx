@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import CartEntryProperties from '../interface/CartEntryProperties'
 import { useLocalStorage } from '@uidotdev/usehooks'
 

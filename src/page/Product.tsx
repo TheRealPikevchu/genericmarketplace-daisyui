@@ -13,7 +13,6 @@ const ProductPage: React.FC = () => {
 
     const { product, isLoading, error } = useFetchProduct({
         productID: id ? id : '-1',
-        dummy: true,
     })
 
     const productImagesFetch = useFetchImages({
@@ -22,7 +21,6 @@ const ProductPage: React.FC = () => {
 
     const similarProductsFetch = useGetSimilarProducts({
         productID: id ? id : '-1',
-        dummy: true,
     })
 
     const [similarProductsID, setSimilarProducts] = useState<number[]>([])

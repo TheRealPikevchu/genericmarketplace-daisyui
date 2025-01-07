@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import ProductProperties from '../interface/ProductProperties'
 import axios from 'axios'
 import ProductGroupProperties from '../interface/ProductGroupProperties'
+import useDummy from '../data/dummyjson'
 
 const defaultURL = ''
 const debugURL = 'https://dummyjson.com/products/'
 interface UseGetSimilarProductsOptions {
     productID: string
-    url?: string
-    dummy?: boolean
 }
 
 // interface ProductsResponseProperties {
@@ -19,11 +18,7 @@ interface UseGetSimilarProductsOptions {
 // }
 const limit = 6
 
-const useGetSimilarProducts = ({
-    productID,
-    url = defaultURL,
-    dummy = false,
-}: UseGetSimilarProductsOptions) => {
+const useGetSimilarProducts = ({ productID }: UseGetSimilarProductsOptions) => {
     const [product, setProduct] = useState<ProductProperties | null>(null)
     const [products, setProducts] = useState<number[]>()
     const [isLoading, setIsLoading] = useState(true)
@@ -34,7 +29,7 @@ const useGetSimilarProducts = ({
             setIsLoading(true)
             try {
                 const response = await axios.get(
-                    `${dummy ? debugURL : url}${productID}`
+                    `${useDummy ? debugURL : defaultURL}${productID}`
                 )
                 const productData = response.data
                 setProduct(productData)
@@ -43,13 +38,13 @@ const useGetSimilarProducts = ({
             }
         }
         fetchProduct()
-    }, [productID, url])
+    }, [productID, defaultURL])
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
                 const response = await axios.get(
-                    `${dummy ? debugURL : url}/category/${product?.category}?limit=${limit + 1}&select=id`
+                    `${useDummy ? debugURL : defaultURL}/category/${product?.category}?limit=${limit + 1}&select=id`
                 )
                 const productsData = response.data as ProductGroupProperties
                 const formattedProductsData = productsData.products.map(

@@ -12,7 +12,6 @@ interface CategoryCardProperties {
 const CategoryCard: React.FC<CategoryCardProperties> = ({ slug, name }) => {
     const productThumbFetch = useFetchCategoryThumb({
         slug: slug,
-        dummy: true,
     })
     const [productThumb, setProductThumb] = useState<string>()
 

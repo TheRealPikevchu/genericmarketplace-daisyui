@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import ProductProperties from '../interface/ProductProperties'
 import axios from 'axios'
+import useDummy from '../data/dummyjson'
 
 const defaultURL = ''
 const debugURL = 'https://dummyjson.com/products/'
 interface UseGetNewestProductsOptions {
     quantity?: number
-    url?: string
-    dummy?: boolean
 }
 
 interface ProductResponseProperties {
@@ -29,8 +28,6 @@ interface ProductsResponseProperties {
 
 const useGetNewestProducts = ({
     quantity = -1,
-    url = defaultURL,
-    dummy = false,
 }: UseGetNewestProductsOptions) => {
     const [products, setProducts] = useState<string[]>()
     const [isLoading, setIsLoading] = useState(true)
@@ -41,7 +38,7 @@ const useGetNewestProducts = ({
             try {
                 setIsLoading(true)
                 const response = await axios.get(
-                    `${dummy ? debugURL : url}?select=id,meta`
+                    `${useDummy ? debugURL : defaultURL}?select=id,meta`
                 )
                 const productsData = response.data as ProductsResponseProperties
 
@@ -67,7 +64,7 @@ const useGetNewestProducts = ({
             }
         }
         fetchProducts()
-    }, [quantity, url])
+    }, [quantity, defaultURL])
 
     return { products, isLoading, error }
 }

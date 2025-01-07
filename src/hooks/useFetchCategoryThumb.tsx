@@ -2,20 +2,15 @@ import React, { useState, useEffect } from 'react'
 import ProductProperties from '../interface/ProductProperties'
 import axios from 'axios'
 import ProductGroupProperties from '../interface/ProductGroupProperties'
+import useDummy from '../data/dummyjson'
 
 const defaultURL = ''
 const debugURL = 'https://dummyjson.com/products/category/'
 interface UseFetchCategoryThumbOptions {
     slug: string
-    url?: string
-    dummy?: boolean
 }
 
-const useFetchCategoryThumb = ({
-    slug,
-    url = defaultURL,
-    dummy = false,
-}: UseFetchCategoryThumbOptions) => {
+const useFetchCategoryThumb = ({ slug }: UseFetchCategoryThumbOptions) => {
     const [product, setProduct] = useState<ProductProperties | null>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<Error | null>(null)
@@ -32,7 +27,7 @@ const useFetchCategoryThumb = ({
             setIsLoading(true)
             try {
                 const response = await axios.get(
-                    `${dummy ? debugURL : url}${slug}`
+                    `${useDummy ? debugURL : defaultURL}${slug}`
                 )
                 const categoryData = response.data as ProductGroupProperties
                 setProduct(categoryData.products[0])
@@ -43,7 +38,7 @@ const useFetchCategoryThumb = ({
             }
         }
         fetchCategory()
-    }, [slug, url])
+    }, [slug, defaultURL])
 
     useEffect(() => {
         setThumb(product?.thumbnail)

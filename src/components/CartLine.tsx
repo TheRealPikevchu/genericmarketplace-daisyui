@@ -9,7 +9,6 @@ interface CartLineProperties {
 const CartLine: React.FC<CartLineProperties> = ({ ID, quantity }) => {
     const { product, isLoading, error } = useFetchProduct({
         productID: ID,
-        dummy: true,
     })
 
     const [finalPrice, setFinalPrice] = useState<number>(0)

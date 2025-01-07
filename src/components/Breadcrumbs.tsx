@@ -13,6 +13,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProperties> = ({ path }) => {
         : location.pathname.split('/').slice(1)
 
     // TODO :
+    // simply pass breadcrumbs name and page into the props... and use location.pahtname if nothing is given
     // - fix breadcrumbs on page reloading / nav next prev.
     // - improve breadcrumbs pathing -> ex for a product it should always follow the pattern
     //      Home / Categories[product.category] / product.title (max lenght 25)

@@ -22,7 +22,6 @@ const ProductsCategoryFilter: React.FC<ProductsCategoryFilterProperties> = ({
         slug: slug,
         skip: page * maxElements,
         limit: maxElements,
-        dummy: true,
     })
 
     useEffect(() => {
