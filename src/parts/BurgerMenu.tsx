@@ -1,12 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import useGetCart from '../hooks/useGetCart'
 
 interface BurgerMenuProperties {
     menuItems: { name: string; link: string }[]
 }
 
 const BurgerMenu: React.FC<BurgerMenuProperties> = ({ menuItems }) => {
-    // TODO : sticky on mobile ?
+    const [storedCart] = useGetCart()
+
+    const [cartCount, setCartCount] = useState<number>(0)
+
+    useEffect(() => {
+        if (storedCart && storedCart.length > 0) {
+            setCartCount(
+                storedCart.reduce((total, current) => {
+                    return current.quantity + total
+                }, 0)
+            )
+        }
+    }, [storedCart])
+
+    // sticky on mobile ?
     return (
         <>
             <div className="navbar bg-base-orange-600 justify-evenly items-center w-full px-4 py-3">
@@ -79,7 +94,14 @@ const BurgerMenu: React.FC<BurgerMenuProperties> = ({ menuItems }) => {
                                 person
                             </a>
                         </button>
-                        <button className="p-0 no-underline">
+                        <button className="relative p-0 no-underline">
+                            {cartCount > 0 && (
+                                <div className="indicator absolute top-1/4 right-1">
+                                    <span className="numeric px-1 indicator-item badge bg-green-500 border-green-500 font-bold text-white">
+                                        {cartCount}
+                                    </span>
+                                </div>
+                            )}
                             <Link
                                 to="/cart"
                                 className="btn btn-ghost p-0 text-sky-950 text-3xl no-underline mx-0.5"

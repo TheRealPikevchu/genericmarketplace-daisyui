@@ -26,7 +26,7 @@ const ShoppingCartPage: React.FC = () => {
             <h1 className="w-full bg-white">Shopping cart</h1>
             {storedCart && storedCart.length > 0 ? (
                 <>
-                    <div className="flex flex-col justify-end text-right w-full gap-y-1.5">
+                    <div className="flex flex-col justify-end items-end text-right w-full gap-y-1.5">
                         <h2 className="text-sky-950 text-lg">Order summary</h2>
                         {storedCart?.map((item) => (
                             <CartLine

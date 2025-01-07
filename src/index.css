@@ -18,6 +18,11 @@ code {
         monospace;
 }
 
+.badge.numeric {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: small;
+}
+
 .archivo {
     font-family: 'Archivo', sans-serif;
     font-optical-sizing: auto;

@@ -1,27 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import CartEntryProperties from '../interface/CartEntryProperties'
+import { useLocalStorage } from '@uidotdev/usehooks'
 
 const useAddToCart = (): [
     CartEntryProperties[],
     (ID: string, price: number) => void,
 ] => {
-    const [storedCart, setStoredCart] = useState<CartEntryProperties[]>(() => {
-        try {
-            const localCart = window.localStorage.getItem('cart')
-            return localCart ? JSON.parse(localCart) : null
-        } catch (error) {
-            console.error('Error parsing localStorage key "cart":', error)
-            return null
-        }
-    })
-
-    useEffect(() => {
-        try {
-            window.localStorage.setItem('cart', JSON.stringify(storedCart))
-        } catch (error) {
-            console.error('Error parsing localStorage key "cart":', error)
-        }
-    }, [storedCart])
+    const [cart, setCart] = useLocalStorage<CartEntryProperties[]>('cart', [])
 
     const addToCart = (ID: string, price: number) => {
         try {
@@ -31,31 +16,31 @@ const useAddToCart = (): [
                 price: price,
             }
 
-            if (!storedCart) {
-                setStoredCart([potentialNewItem])
+            if (!cart) {
+                setCart([potentialNewItem])
                 return
             }
 
-            const storedItemIndex: number | undefined = storedCart.findIndex(
+            const storedItemIndex: number | undefined = cart.findIndex(
                 (item) => item.ID === ID
             )
             if (storedItemIndex !== -1) {
-                const tmpCart = [...storedCart]
+                const tmpCart = [...cart]
                 tmpCart[storedItemIndex] = {
                     ID: ID,
                     quantity: tmpCart[storedItemIndex].quantity + 1,
                     price: price,
                 }
-                setStoredCart(tmpCart)
+                setCart(tmpCart)
             } else {
-                setStoredCart([...storedCart, potentialNewItem])
+                setCart([...cart, potentialNewItem])
             }
         } catch (error) {
             console.error('Error parsing shopping cart:', error)
         }
     }
 
-    return [storedCart, addToCart]
+    return [cart, addToCart]
 }
 
 export default useAddToCart

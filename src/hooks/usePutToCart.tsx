@@ -1,32 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import CartEntryProperties from '../interface/CartEntryProperties'
+import { useLocalStorage } from '@uidotdev/usehooks'
 
 const usePutToCart = (): [
     CartEntryProperties[],
     (value: CartEntryProperties) => void,
 ] => {
-    const [storedCart, setStoredCart] = useState<CartEntryProperties[]>(() => {
-        try {
-            const localCart = window.localStorage.getItem('cart')
-            return localCart ? JSON.parse(localCart) : null
-        } catch (error) {
-            console.error('Error parsing localStorage key "cart":', error)
-            return null
-        }
-    })
-
-    useEffect(() => {
-        try {
-            window.localStorage.setItem('cart', JSON.stringify(storedCart))
-        } catch (error) {
-            console.error('Error parsing localStorage key "cart":', error)
-        }
-    }, [storedCart])
+    const [cart, setCart] = useLocalStorage<CartEntryProperties[]>('cart', [])
 
     const putToCart = (entry: CartEntryProperties) => {
         try {
-            if (!storedCart) {
-                setStoredCart([
+            if (!cart) {
+                setCart([
                     {
                         ID: entry.ID,
                         quantity: entry.quantity,
@@ -36,11 +21,11 @@ const usePutToCart = (): [
                 return
             }
 
-            const storedItemIndex: number | undefined = storedCart.findIndex(
+            const storedItemIndex: number | undefined = cart.findIndex(
                 (item) => item.ID === entry.ID
             )
             if (storedItemIndex !== -1) {
-                const tmpCart = [...storedCart]
+                const tmpCart = [...cart]
                 if (entry.quantity === 0) {
                     tmpCart.splice(storedItemIndex, 1)
                 } else {
@@ -50,10 +35,10 @@ const usePutToCart = (): [
                         price: entry.price,
                     }
                 }
-                setStoredCart(tmpCart)
+                setCart(tmpCart)
             } else {
-                setStoredCart([
-                    ...storedCart,
+                setCart([
+                    ...cart,
                     {
                         ID: entry.ID,
                         quantity: entry.quantity,
@@ -66,7 +51,7 @@ const usePutToCart = (): [
         }
     }
 
-    return [storedCart, putToCart]
+    return [cart, putToCart]
 }
 
 export default usePutToCart
