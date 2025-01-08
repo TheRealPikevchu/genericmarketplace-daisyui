@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import LoadedImage from './LoadedImage'
-import useFetchProduct from '../hooks/useFetchProduct'
 import useFetchCategoryThumb from '../hooks/useFetchCategoryThumb'
 
 interface CategoryCardProperties {
     slug: string
     name: string
+    cover?: boolean
 }
 
-const CategoryCard: React.FC<CategoryCardProperties> = ({ slug, name }) => {
+const CategoryCard: React.FC<CategoryCardProperties> = ({
+    slug,
+    name,
+    cover,
+}) => {
     const productThumbFetch = useFetchCategoryThumb({
         slug: slug,
     })
     const [productThumb, setProductThumb] = useState<string>()
 
     useEffect(() => {
-        setProductThumb(productThumbFetch.thumb)
+        if (slug === 'all') {
+            setProductThumb('../../assets/shopping.png')
+        } else {
+            setProductThumb(productThumbFetch.thumb)
+        }
     }, [productThumbFetch])
 
     return (
@@ -31,7 +39,7 @@ const CategoryCard: React.FC<CategoryCardProperties> = ({ slug, name }) => {
                     <LoadedImage
                         src={productThumb}
                         alt={name + ' thumbnail'}
-                        layout="w-full aspect-video object-contain full"
+                        layout={`w-full aspect-video ${cover ? 'object-cover' : 'object-contain'} full`}
                     />
                 </div>
             </Link>
