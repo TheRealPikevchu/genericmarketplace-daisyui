@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import Breadcrumbs from '../components/Breadcrumbs'
 import ProductsCategoryFilter from '../filters/ProductsCategoryFilter'
 import useFetchCategories from '../hooks/useFetchCategories'
+import { cpSync } from 'fs'
 
 interface ProductsPageProperties {}
 
@@ -43,10 +44,18 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
                         name: category,
                         path: '/products?category=' + categoryFromParams,
                     })
-                // TODO : manage error case => 404
             }
         }
     }, [categories, isLoading, categoryFromParams])
+
+    const navigateToPage = (newPage: number) => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+
+        setSearchParams({
+            category: categoryFromParams,
+            page: newPage.toString(),
+        })
+    }
 
     return (
         <>
@@ -62,12 +71,7 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
                             slug={categoryFromParams}
                             page={pageFromParams}
                             maxElements={pageMaxElements}
-                            onPageChange={(newPage) => {
-                                setSearchParams({
-                                    category: categoryFromParams,
-                                    page: newPage.toString(),
-                                })
-                            }}
+                            onPageChange={(newPage) => navigateToPage(newPage)}
                         />
                     </div>
                 )}
