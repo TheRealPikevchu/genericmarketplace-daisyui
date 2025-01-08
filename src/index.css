@@ -91,3 +91,7 @@ p {
 .full.skeleton {
     border-radius: 0px;
 }
+
+.transparent {
+    opacity: 0.77;
+}
