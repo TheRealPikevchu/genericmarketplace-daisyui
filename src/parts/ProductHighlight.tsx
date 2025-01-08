@@ -3,7 +3,7 @@ import CarouselPresenter from '../components/CustomCarousel'
 
 const HighlightCarousel: React.FC = () => {
     return (
-        <div className="px-8 py-4 bg-white">
+        <div>
             <CarouselPresenter
                 interval={5000}
                 size="min-h-72 max-h-80"

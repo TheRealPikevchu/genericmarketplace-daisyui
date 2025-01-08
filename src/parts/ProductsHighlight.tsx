@@ -13,7 +13,7 @@ const ProductsHighlight: React.FC = () => {
     }, [products, isLoading])
 
     return (
-        <div className="py-4 px-8">
+        <div>
             <h1>Newest products</h1>
             <div className="flex flex-row flex-wrap">
                 {newestProductsID?.map((product) => (

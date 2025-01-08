@@ -10,12 +10,6 @@ interface UseGetSimilarProductsOptions {
     productID: string
 }
 
-// interface ProductsResponseProperties {
-//     products: object[] // TODO : replace this with the correct expected typing
-//     total: number
-//     skip: number
-//     limit: number
-// }
 const limit = 6
 
 const useGetSimilarProducts = ({ productID }: UseGetSimilarProductsOptions) => {

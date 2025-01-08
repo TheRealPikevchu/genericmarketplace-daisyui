@@ -21,12 +21,12 @@ const ShoppingCartPage: React.FC = () => {
     }, [storedCart])
 
     return (
-        <div className="flex flex-col py-4 px-8 gap-y-3">
+        <div className="w-full">
             <Breadcrumbs crumbs={[{ name: 'Shopping cart', path: '/cart' }]} />
             <h1 className="w-full bg-white">Shopping cart</h1>
             {storedCart && storedCart.length > 0 ? (
-                <>
-                    <div className="flex flex-col justify-end items-end text-right w-full gap-y-1.5">
+                <div className="flex flex-col md:flex-row-reverse">
+                    <div className="flex flex-col md:w-1/2 justify-end md:justify-start items-end text-right w-full gap-y-1.5 md:mt-3 md:sticky md:top-0">
                         <h2 className="text-sky-950 text-lg">Order summary</h2>
                         {storedCart?.map((item) => (
                             <CartLine
@@ -39,12 +39,12 @@ const ShoppingCartPage: React.FC = () => {
                         <h2 className="text-sky-950">
                             {totalPrice.toFixed(2) + '€'}
                         </h2>
-                        <button className="btn btn-lg w-full bg-orange-600 border-orange-500 text-white hover:bg-sky-950">
+                        <button className="btn btn-lg w-full md:w-11/12 bg-orange-600 border-orange-500 text-white hover:bg-sky-950">
                             Proceed to cash out
                         </button>
                     </div>
-                    <div className="flex flex-col gap-1.5">
-                        <h2 className="text-sky-950">Detail :</h2>
+                    <div className="flex flex-col md:w-1/2 gap-1.5 mt-3">
+                        <h2 className="text-sky-950 md:hidden">Detail :</h2>
                         {storedCart?.map((item) => (
                             <CartCard
                                 ID={item.ID}
@@ -72,7 +72,7 @@ const ShoppingCartPage: React.FC = () => {
                             />
                         ))}
                     </div>
-                </>
+                </div>
             ) : (
                 <p className="text-sky-950 my-6">
                     Nothing here... yet! <br /> Let's browse our{' '}

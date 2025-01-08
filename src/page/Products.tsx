@@ -50,13 +50,13 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
 
     return (
         <>
-            <Breadcrumbs
-                crumbs={[crumbs ?? { name: 'Products', path: '/products' }]}
-            />
-            <div className="py-4 px-8">
+            <div>
+                <Breadcrumbs
+                    crumbs={[crumbs ?? { name: 'Products', path: '/products' }]}
+                />
                 <h1>{categoryName}</h1>
                 {!isLoading && (
-                    <div className="flex flex-row flex-wrap">
+                    <div className="flex flex-row flex-wrap md:gap-y-6">
                         <ProductsCategoryFilter
                             key={`${categoryFromParams}-${pageFromParams}`}
                             slug={categoryFromParams}

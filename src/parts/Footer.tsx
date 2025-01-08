@@ -58,8 +58,8 @@ const FooterContent: FooterSection[] = [
 
 const Footer: React.FC = () => {
     return (
-        <div className="flex flex-col bg-sky-950 justify-evenly md:items-center gap-4 text-white py-1.5">
-            <div className="flex flex-col sm:flex-row md:flex-row justify-between max-w-7xl gap-4 px-8 py-1.5">
+        <div className="flex flex-col w-full bg-sky-950 justify-evenly md:items-center gap-4 text-white py-1.5">
+            <div className="flex flex-col sm:flex-row md:flex-row justify-between md:justify-between w-full max-w-6xl gap-4 px-8 py-1.5">
                 {FooterContent.map((section) => {
                     return (
                         <div className="gap-1.5" key={section.title}>

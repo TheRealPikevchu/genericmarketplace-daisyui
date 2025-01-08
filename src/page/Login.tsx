@@ -38,9 +38,9 @@ const LoginPage: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col py-4 px-8 gap-y-3">
+        <div className="flex flex-col">
             <Breadcrumbs crumbs={[{ name: 'Login', path: '/login' }]} />
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center md:mt-6">
                 {!isLoading && !auth ? (
                     <div className="w-full max-w-sm p-6">
                         <h1 className="text-center mb-3">Login</h1>
@@ -81,7 +81,7 @@ const LoginPage: React.FC = () => {
                             <div className="form-control mt-4">
                                 <button
                                     type="submit"
-                                    className="btn btn-primary bg-sky-950 border-sky-950 text-white w-full"
+                                    className="btn btn-primary bg-sky-950 border-sky-950 hover:bg-orange-500 hover:border-orange-500 text-white w-full"
                                 >
                                     Login
                                 </button>
@@ -99,7 +99,7 @@ const LoginPage: React.FC = () => {
                             <h1>Hello, {auth?.firstName}!</h1>
                         </div>
                         <button
-                            className="btn btn-primary bg-sky-950 border-sky-950 text-white w-full"
+                            className="btn btn-primary bg-sky-950 border-sky-950 hover:bg-orange-500 hover:border-orange-500 text-white w-full"
                             onClick={() => handleDisconnect()}
                         >
                             Disconnect

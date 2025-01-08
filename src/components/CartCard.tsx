@@ -57,7 +57,7 @@ const CartCard: React.FC<CartCardProperties> = ({
                     {isLoading ? (
                         <div className={'skeleton w-full h-8'}></div>
                     ) : (
-                        <div className="flex flex-row items-center w-full justify-evenly text-xs">
+                        <div className="flex flex-row items-center w-full justify-end gap-x-3 text-xs">
                             <span className="archivo-black text-center">
                                 {finalPrice.toFixed(2) + '€'}
                             </span>
