@@ -6,15 +6,16 @@ const HighlightCarousel: React.FC = () => {
         <div>
             <CarouselPresenter
                 interval={5000}
-                size="min-h-72 max-h-80"
+                size="h-72"
                 externalControls
                 cards={[
                     {
                         title: 'Welcome to GenericMarketplace.com !',
                         headline:
-                            'The number one shopping website just for you.',
+                            'The number one shopping website made for you.',
                         backgroundColor: '#f97316',
-                        noButton: true,
+                        buttonText: 'Browse products',
+                        link: '/products',
                     },
                     {
                         title: 'Amazing product just for you!',
@@ -28,7 +29,7 @@ const HighlightCarousel: React.FC = () => {
                     {
                         title: 'Check out this flash offer!',
                         headline:
-                            'Get ready for christmas with this super dupper sale.',
+                            "Get ready for christmas with this super sale on men's watches.",
                         backgroundColor: '#f5d59e',
                         backgroundImage: '../assets/gift-box.jpg',
                         buttonText: 'View offer',

@@ -44,6 +44,7 @@ const CarouselPresenter: React.FC<CarouselProperties> = ({
                     showStatus={false}
                     showArrows={!externalControls}
                     selectedItem={selectedIndex}
+                    className={size}
                 >
                     {cards.map((card, cardIndex) => {
                         return (
