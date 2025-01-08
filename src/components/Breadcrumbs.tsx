@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import paths from '../data/paths'
 import { useMediaQuery } from '@uidotdev/usehooks'
 
 interface BreadcrumbsProperties {
@@ -11,6 +10,7 @@ interface BreadcrumbsProperties {
 }
 
 const Breadcrumbs: React.FC<BreadcrumbsProperties> = ({ crumbs }) => {
+    const location = useLocation()
     const [breadcrumbs, setBreadcrumbs] = useState<
         {
             name: string | undefined
@@ -35,7 +35,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProperties> = ({ crumbs }) => {
     useEffect(() => {
         crumbs.unshift({ name: 'Home', path: '/' })
         setBreadcrumbs(crumbs)
-    }, [crumbs])
+    }, [crumbs, location.pathname])
 
     // TODO :
     // simply pass breadcrumbs name and page into the props... and use location.pahtname if nothing is given
@@ -46,7 +46,15 @@ const Breadcrumbs: React.FC<BreadcrumbsProperties> = ({ crumbs }) => {
         <div className="max-w-full px-2 breadcrumbs text-sm text-sky-950 overflow-clip">
             <ul>
                 {breadcrumbs?.map((crumb, index) => (
-                    <li key={'breadcrumbs_' + crumb.name + '_' + index}>
+                    <li
+                        key={
+                            'breadcrumbs_' +
+                            crumb.name +
+                            '_' +
+                            index +
+                            location.pathname
+                        }
+                    >
                         <Link
                             to={'' + crumb.path}
                             className={

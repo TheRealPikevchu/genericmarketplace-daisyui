@@ -12,12 +12,10 @@ interface HeaderProperties {
 }
 
 const BurgerMenuItems = [
+    { name: 'All products', link: 'products?category=all' },
     { name: 'Categories', link: 'categories' },
-    { name: 'All products', link: 'products' },
-    { name: 'Hot deals', link: '' },
-    { name: 'New products', link: '' },
-    { name: 'Second hand', link: '' },
-    { name: 'Services', link: '' },
+    { name: 'Groceries', link: 'products?category=groceries' },
+    { name: 'Rental', link: 'products?category=vehicle' },
 ]
 
 const Header: React.FC<HeaderProperties> = ({
