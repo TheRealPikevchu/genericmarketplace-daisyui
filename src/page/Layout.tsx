@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../index.css'
 import Header from '../parts/Header'
 import Footer from '../parts/Footer'
@@ -8,6 +8,12 @@ import ScrollToTop from '../components/ScrollToTopButton'
 interface LayoutProperties {}
 
 const Layout: React.FC<LayoutProperties> = () => {
+    const location = useLocation()
+
+    useEffect(() => {
+        window.scrollTo({ top: 0 })
+    }, [location.pathname])
+
     return (
         <>
             <div className="flex bg-white flex-col items-center">

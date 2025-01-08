@@ -37,7 +37,7 @@ const HighlightCarousel: React.FC = () => {
                     {
                         title: welcomeMessage?.title,
                         headline: welcomeMessage?.message,
-                        backgroundColor: '#f97316',
+                        backgroundColor: '#f97316dd',
                         buttonText: 'Browse products',
                         link: '/products',
                     },

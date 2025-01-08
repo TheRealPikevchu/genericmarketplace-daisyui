@@ -33,7 +33,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProperties> = ({ crumbs }) => {
     }, [crumbs, isMobile])
 
     useEffect(() => {
-        crumbs.unshift({ name: 'Home', path: '' })
+        crumbs.unshift({ name: 'Home', path: '/' })
         setBreadcrumbs(crumbs)
     }, [crumbs])
 
