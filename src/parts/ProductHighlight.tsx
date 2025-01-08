@@ -1,18 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CarouselPresenter from '../components/CustomCarousel'
+import useFetchAuth from '../hooks/useFetchAuth'
+
+const defaultWelcomMessage = {
+    title: 'Welcome to GenericMarketplace.com !',
+    message: 'The number one shopping website made for you.',
+}
 
 const HighlightCarousel: React.FC = () => {
+    const { auth, isLoading, error } = useFetchAuth({})
+
+    const [welcomeMessage, setWelcomeMessage] = useState<{
+        title: string
+        message: string
+    }>(defaultWelcomMessage)
+
+    useEffect(() => {
+        if (!isLoading && !error && auth) {
+            setWelcomeMessage({
+                title: `Hello ${auth.firstName} !`,
+                message:
+                    'Welcome back to GenericMarketplace, what are you looking for today ?',
+            })
+        } else {
+            setWelcomeMessage(defaultWelcomMessage)
+        }
+    }, [auth, isLoading, error])
+
     return (
         <div>
             <CarouselPresenter
-                interval={5000}
+                interval={10000}
                 size="h-72"
                 externalControls
                 cards={[
                     {
-                        title: 'Welcome to GenericMarketplace.com !',
-                        headline:
-                            'The number one shopping website made for you.',
+                        title: welcomeMessage?.title,
+                        headline: welcomeMessage?.message,
                         backgroundColor: '#f97316',
                         buttonText: 'Browse products',
                         link: '/products',
