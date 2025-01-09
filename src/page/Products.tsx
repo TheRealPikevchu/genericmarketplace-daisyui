@@ -108,6 +108,10 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
         if (pageType === PageType.category && !categoriesFetch.isLoading) {
             if (categoryFromParams === 'all') {
                 setName('All our products')
+                setCrumbs({
+                    name: 'All products',
+                    path: '/products?category=all',
+                })
             } else {
                 const category = categoriesFetch.categories.find(
                     (c) => c.slug === categoryFromParams
@@ -121,7 +125,12 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
                     })
             }
         }
-    }, [pageType, categoriesFetch, categoryFromParams])
+    }, [
+        pageType,
+        categoriesFetch.isLoading,
+        categoriesFetch.categories,
+        categoryFromParams,
+    ])
     //#endregion category
 
     //#region search
