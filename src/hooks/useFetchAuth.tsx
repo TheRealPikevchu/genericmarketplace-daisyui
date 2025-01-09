@@ -61,7 +61,7 @@ const useFetchAuth = ({ username, password }: UseFetchAuthProperties) => {
         const fetchAuth = async () => {
             setIsLoading(true)
             try {
-                if (!token) {
+                if (!token && username && password) {
                     const response = await axios.post(
                         `${useDummy ? debugURL : defaultURL}login`,
                         {
@@ -72,7 +72,7 @@ const useFetchAuth = ({ username, password }: UseFetchAuthProperties) => {
                     const responseAuth = response.data
                     setAuth(responseAuth)
                     setToken(responseAuth.accessToken)
-                } else {
+                } else if (token) {
                     me()
                 }
                 setError(null)

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import Breadcrumbs from '../components/Breadcrumbs'
 import ProductsCategoryFilter from '../filters/ProductsCategoryFilter'
 import useFetchCategories from '../hooks/useFetchCategories'
+import ProductsSearchFilter from '../filters/ProductsSearchFilter'
+import { useMediaQuery } from '@uidotdev/usehooks'
 
 interface ProductsPageProperties {}
-
-const pageMaxElements = 25
 
 enum PageType {
     none = -1,
@@ -17,6 +17,9 @@ enum PageType {
 }
 
 const ProductsPage: React.FC<ProductsPageProperties> = () => {
+    const isMobile = useMediaQuery('only screen and (max-width : 640px)')
+    const pageMaxElements = isMobile ? 24 : 25
+
     const [searchParams, setSearchParams] = useSearchParams()
     const [pageFromParams, setPageFromParams] = useState<number>(0)
 
@@ -25,9 +28,14 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
     const [crumbs, setCrumbs] = useState<{ name: string; path: string }>()
 
     const [categoryFromParams, setCategoryFromParams] = useState<string>('all')
-    const { categories, error, isLoading } = useFetchCategories()
+    const categoriesFetch = useFetchCategories()
+
+    const [searchFromParams, setSearchFromParams] = useState<string | null>(
+        null
+    )
 
     const navitage = useNavigate()
+    const location = useLocation()
 
     /**
      * TODO :
@@ -74,15 +82,18 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
         switch (pageType) {
             case PageType.category: {
                 const category = searchParams.get('category') || 'all'
-
                 setCategoryFromParams(category)
                 break
+            }
+            case PageType.search: {
+                const search = searchParams.get('search')
+                setSearchFromParams(search)
             }
 
             default:
                 break
         }
-    }, [pageType])
+    }, [searchParams, pageType])
 
     const navigateToPage = (newPage: number) => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -94,11 +105,11 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
 
     //#region category
     useEffect(() => {
-        if (!isLoading) {
+        if (pageType === PageType.category && !categoriesFetch.isLoading) {
             if (categoryFromParams === 'all') {
                 setName('All our products')
             } else {
-                const category = categories.find(
+                const category = categoriesFetch.categories.find(
                     (c) => c.slug === categoryFromParams
                 )?.name
                 if (!category) navitage('/404')
@@ -110,15 +121,20 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
                     })
             }
         }
-    }, [categories, isLoading, categoryFromParams])
+    }, [pageType, categoriesFetch, categoryFromParams])
+    //#endregion category
 
-    const navigateToPage = (newPage: number) => {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-
-        const newSearchParams = new URLSearchParams(searchParams.toString())
-        newSearchParams.set('page', newPage.toString())
-        setSearchParams(newSearchParams)
-    }
+    //#region search
+    useEffect(() => {
+        if (pageType === PageType.search && searchFromParams) {
+            setName(searchFromParams)
+            setCrumbs({
+                name: searchFromParams,
+                path: location.pathname,
+            })
+        }
+    }, [pageType, searchFromParams])
+    //#endrefion search
 
     return (
         <>
@@ -126,10 +142,20 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
                 key={`${searchParams}`}
                 crumbs={[crumbs ?? { name: 'Products', path: '/products' }]}
             />
-            {!isLoading && pageType === PageType.category && (
+            {!categoriesFetch.isLoading && pageType === PageType.category && (
                 <ProductsCategoryFilter
-                    key={`${searchParams}-${categoryFromParams}-${pageFromParams}`}
+                    key={`${pageName}-${searchParams}-${categoryFromParams}-${pageFromParams}-${pageType}`}
                     slug={categoryFromParams}
+                    name={pageName}
+                    page={pageFromParams}
+                    maxElements={pageMaxElements}
+                    onPageChange={(newPage) => navigateToPage(newPage)}
+                />
+            )}
+            {pageType === PageType.search && (
+                <ProductsSearchFilter
+                    key={`${pageName}-${searchParams}-${searchFromParams}-${pageFromParams}-${pageType}`}
+                    searchQuery={searchFromParams}
                     name={pageName}
                     page={pageFromParams}
                     maxElements={pageMaxElements}
