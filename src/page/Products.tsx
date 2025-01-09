@@ -144,6 +144,8 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
     }, [pageType, searchFromParams])
     //#endrefion search
 
+    // TODO : split pagination on mobile ! too much page displayed on mobile.
+
     return (
         <>
             <Breadcrumbs

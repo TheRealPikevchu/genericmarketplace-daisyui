@@ -24,7 +24,6 @@ const Layout: React.FC<LayoutProperties> = () => {
                 <div className="flex flex-col py-4 px-8 gap-y-3 w-full max-w-6xl min-h-screen">
                     <Outlet />
                 </div>
-                {/* Add a scroll to top button  */}
                 <Footer />
             </div>
             <ScrollToTop />
