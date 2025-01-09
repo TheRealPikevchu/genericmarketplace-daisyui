@@ -3,7 +3,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import Breadcrumbs from '../components/Breadcrumbs'
 import ProductsCategoryFilter from '../filters/ProductsCategoryFilter'
 import useFetchCategories from '../hooks/useFetchCategories'
-import { cpSync } from 'fs'
 
 interface ProductsPageProperties {}
 
@@ -51,10 +50,9 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
     const navigateToPage = (newPage: number) => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
 
-        setSearchParams({
-            category: categoryFromParams,
-            page: newPage.toString(),
-        })
+        const newSearchParams = new URLSearchParams(searchParams.toString())
+        newSearchParams.set('page', newPage.toString())
+        setSearchParams(newSearchParams)
     }
 
     return (
