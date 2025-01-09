@@ -110,8 +110,15 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
                     })
             }
         }
-    }, [pageType, categories, isLoading, categoryFromParams])
-    //#endregion category
+    }, [categories, isLoading, categoryFromParams])
+
+    const navigateToPage = (newPage: number) => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+
+        const newSearchParams = new URLSearchParams(searchParams.toString())
+        newSearchParams.set('page', newPage.toString())
+        setSearchParams(newSearchParams)
+    }
 
     return (
         <>
