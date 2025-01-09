@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import BurgerMenu from './BurgerMenu'
+import BurgerMenu from '../components/BurgerMenu'
 import SearchBar from '../components/SearchBar'
 import { Link } from 'react-router-dom'
 import useGetCart from '../hooks/useGetCart'
