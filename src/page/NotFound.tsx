@@ -11,7 +11,10 @@ const NotFound: React.FC = () => {
                     categories
                 </Link>{' '}
                 and{' '}
-                <Link to="/products" className="text-orange-500 underline">
+                <Link
+                    to="/products?category=all"
+                    className="text-orange-500 underline"
+                >
                     products
                 </Link>{' '}
                 but couldn't find what you are looking for... Let's go back home

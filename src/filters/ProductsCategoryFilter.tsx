@@ -4,6 +4,7 @@ import useGetCategoryProducts from '../hooks/useGetCategoryProducts'
 
 interface ProductsCategoryFilterProperties {
     slug: string
+    name: string
     page: number
     maxElements?: number
     onPageChange: (newPage: number) => void
@@ -11,6 +12,7 @@ interface ProductsCategoryFilterProperties {
 
 const ProductsCategoryFilter: React.FC<ProductsCategoryFilterProperties> = ({
     slug,
+    name,
     page,
     maxElements = 25,
     onPageChange,
@@ -43,32 +45,35 @@ const ProductsCategoryFilter: React.FC<ProductsCategoryFilterProperties> = ({
 
     return (
         <>
-            <ProductsGrid products={products} />
-            {totalPages > 1 && (
-                <div className="join w-full flex justify-center">
-                    <button
-                        className={buttonLayout}
-                        onClick={() => navigateToPage(0)}
-                    >
-                        «
-                    </button>
-                    {Array.from({ length: totalPages }, (_, index) => (
+            <h1 key={`${products}`}>{name}</h1>
+            <div className="flex flex-row flex-wrap md:gap-y-6">
+                <ProductsGrid products={products} />
+                {totalPages > 1 && (
+                    <div className="join w-full flex justify-center">
                         <button
                             className={buttonLayout}
-                            onClick={() => navigateToPage(index)}
-                            key={index}
+                            onClick={() => navigateToPage(0)}
                         >
-                            {index + 1}
+                            «
                         </button>
-                    ))}
-                    <button
-                        className={buttonLayout}
-                        onClick={() => navigateToPage(totalPages - 1)}
-                    >
-                        »
-                    </button>
-                </div>
-            )}
+                        {Array.from({ length: totalPages }, (_, index) => (
+                            <button
+                                className={buttonLayout}
+                                onClick={() => navigateToPage(index)}
+                                key={index}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                        <button
+                            className={buttonLayout}
+                            onClick={() => navigateToPage(totalPages - 1)}
+                        >
+                            »
+                        </button>
+                    </div>
+                )}
+            </div>
         </>
     )
 }

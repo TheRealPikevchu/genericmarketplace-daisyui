@@ -76,7 +76,10 @@ const ShoppingCartPage: React.FC = () => {
             ) : (
                 <p className="text-sky-950 my-6">
                     Nothing here... yet! <br /> Let's browse our{' '}
-                    <Link to="/products/" className="underline text-orange-500">
+                    <Link
+                        to="/products?category=all"
+                        className="underline text-orange-500"
+                    >
                         products
                     </Link>{' '}
                     or{' '}
