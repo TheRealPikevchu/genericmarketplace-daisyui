@@ -1,35 +1,22 @@
-import React, { useState, useEffect } from 'react'
-import ProductProperties from '../interface/ProductProperties'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import useDummy from '../data/dummyjson'
+import ProductGroupProperties from '../interface/ProductGroupProperties'
 
 const defaultURL = ''
 const debugURL = 'https://dummyjson.com/products/'
 interface UseGetNewestProductsOptions {
-    quantity?: number
-}
-
-interface ProductResponseProperties {
-    id: string
-    meta: {
-        createdAt: string
-        updatedAt: string
-        barcode: string
-        qrCode: string
-    }
-}
-
-interface ProductsResponseProperties {
-    products: ProductResponseProperties[]
-    total: number
-    skip: number
-    limit: number
+    skip?: number
+    limit?: number
+    max?: number
 }
 
 const useGetNewestProducts = ({
-    quantity = -1,
+    skip = 0,
+    limit = 0,
+    max = -1,
 }: UseGetNewestProductsOptions) => {
-    const [products, setProducts] = useState<string[]>()
+    const [products, setProducts] = useState<ProductGroupProperties>()
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<Error | null>(null)
 
@@ -38,25 +25,37 @@ const useGetNewestProducts = ({
             try {
                 setIsLoading(true)
                 const response = await axios.get(
-                    `${useDummy ? debugURL : defaultURL}?select=id,meta`
+                    `${useDummy ? debugURL : defaultURL}?limit=${limit}&skip=${skip}&select=id,meta`
                 )
-                const productsData = response.data as ProductsResponseProperties
+                const productsData = response.data as ProductGroupProperties
 
-                let formattedProductsData = productsData.products.sort(
-                    (m, n) => {
-                        const timeM = Date.parse(m.meta.createdAt)
-                        const timeN = Date.parse(n.meta.createdAt)
-                        return timeN - timeM
+                let sortedProductsData = productsData.products.sort((m, n) => {
+                    if (!m.meta && !n.meta) {
+                        return 0
                     }
-                )
+                    if (!m.meta) {
+                        return 1
+                    }
+                    if (!n.meta) {
+                        return -1
+                    }
+                    const timeM = Date.parse(m.meta.createdAt)
+                    const timeN = Date.parse(n.meta.createdAt)
+                    return timeN - timeM
+                })
 
-                if (quantity > 0 && productsData.products.length > quantity) {
-                    formattedProductsData = productsData.products.slice(
-                        0,
-                        quantity
-                    )
+                if (max > 0) {
+                    sortedProductsData = sortedProductsData.slice(0, max)
                 }
-                setProducts(formattedProductsData.map((p) => p.id))
+
+                const result: ProductGroupProperties = {
+                    products: sortedProductsData,
+                    limit: 0,
+                    skip: skip,
+                    total: sortedProductsData.length,
+                }
+
+                setProducts(result)
             } catch (error) {
                 setError(error as Error)
             } finally {
@@ -64,7 +63,7 @@ const useGetNewestProducts = ({
             }
         }
         fetchProducts()
-    }, [quantity, defaultURL])
+    }, [])
 
     return { products, isLoading, error }
 }

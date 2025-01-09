@@ -9,6 +9,9 @@ interface ProductProperties {
     brand: string
     thumbnail: string
     images: string[]
+    meta?: {
+        createdAt: string
+    }
 }
 
 export default ProductProperties

@@ -5,6 +5,7 @@ import ProductsCategoryFilter from '../filters/ProductsCategoryFilter'
 import useFetchCategories from '../hooks/useFetchCategories'
 import ProductsSearchFilter from '../filters/ProductsSearchFilter'
 import { useMediaQuery } from '@uidotdev/usehooks'
+import ProductsNewestFilter from '../filters/ProductsNewestFilter'
 
 interface ProductsPageProperties {}
 
@@ -37,13 +38,6 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
     const navitage = useNavigate()
     const location = useLocation()
 
-    /**
-     * TODO :
-     * fetch search params
-     *  check what key it contains
-     *  regarding the contained key, load the needed filter
-     */
-
     useEffect(() => {
         const entries = Array.from(searchParams.entries())
         if (entries.length === 0) {
@@ -68,6 +62,11 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
                 }
                 case 'newest': {
                     setType(PageType.newest)
+                    setName('Newest products')
+                    setCrumbs({
+                        name: 'Newest products',
+                        path: '/products?newest',
+                    })
                     break
                 }
                 default: {
@@ -165,6 +164,15 @@ const ProductsPage: React.FC<ProductsPageProperties> = () => {
                 <ProductsSearchFilter
                     key={`${pageName}-${searchParams}-${searchFromParams}-${pageFromParams}-${pageType}`}
                     searchQuery={searchFromParams}
+                    name={pageName}
+                    page={pageFromParams}
+                    maxElements={pageMaxElements}
+                    onPageChange={(newPage) => navigateToPage(newPage)}
+                />
+            )}
+            {pageType === PageType.newest && (
+                <ProductsNewestFilter
+                    key={`${pageName}-${searchParams}-${searchFromParams}-${pageFromParams}-${pageType}`}
                     name={pageName}
                     page={pageFromParams}
                     maxElements={pageMaxElements}

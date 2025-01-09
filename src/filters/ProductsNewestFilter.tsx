@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import ProductsGrid from '../components/ProductsGrid'
-import useSearchProductsByName from '../hooks/useSearchProductsByName'
 import { Link } from 'react-router-dom'
+import useGetNewestProducts from '../hooks/useGetNewestProducts'
 
-interface ProductsSearchFilterProperties {
-    searchQuery: string | null
+interface ProductsNewestFilterProperties {
     name: string
     page: number
     maxElements?: number
     onPageChange: (newPage: number) => void
 }
 
-const ProductsSearchFilter: React.FC<ProductsSearchFilterProperties> = ({
-    searchQuery,
+const ProductsNewestFilter: React.FC<ProductsNewestFilterProperties> = ({
     name,
     page,
     maxElements = 25,
@@ -21,8 +19,7 @@ const ProductsSearchFilter: React.FC<ProductsSearchFilterProperties> = ({
     const [totalProducts, setTotal] = useState<number>(0)
     const [totalPages, setTotalPages] = useState<number>(0)
 
-    const { products, isLoading, error } = useSearchProductsByName({
-        searchQuery: searchQuery,
+    const { products, isLoading, error } = useGetNewestProducts({
         skip: page * maxElements,
         max: maxElements,
     })
@@ -31,7 +28,7 @@ const ProductsSearchFilter: React.FC<ProductsSearchFilterProperties> = ({
         if (!isLoading && products) {
             setTotal(products.total)
         }
-    }, [products, isLoading, searchQuery])
+    }, [products, isLoading])
 
     useEffect(() => {
         setTotalPages(Math.ceil(totalProducts / maxElements))
@@ -108,4 +105,4 @@ const ProductsSearchFilter: React.FC<ProductsSearchFilterProperties> = ({
     )
 }
 
-export default ProductsSearchFilter
+export default ProductsNewestFilter
